@@ -1,6 +1,5 @@
 package com.akasa.food.order.dto;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.ToString;
 

@@ -1,5 +1,3 @@
-## React JS
-Use npm run dev
 ## Springboot project
 ### JAVA 11 required to run
 - No need to set up any DB configuration used cloud and h2 Data base.
@@ -14,6 +12,12 @@ Pass: testpass
 Defined DATA dummy data like flight details for this user.
 
 You cannot see all menu untill you login.
+
+## API Details
+- http://localhost:8081/swagger-ui/index.html
+- Use Swagger
+- For auth first sign incopy the key and save in authorise
+- ![Alt text](./src/main/resources/auth.png?raw=true "Title")
 
 ## DATABASE
 - We Have used SQL
