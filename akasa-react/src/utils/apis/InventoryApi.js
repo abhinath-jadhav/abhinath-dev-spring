@@ -1,4 +1,5 @@
 import { axiosAuth, axiosNoAuth } from "../axios";
+import validUser from "../PriavateRoute";
 
 class InventoryApi {
   static async getAllInventories() {
