@@ -1,0 +1,102 @@
+[
+  {
+    "itemId": 1,
+    "itemName": "Corn Pizza",
+    "stock": 5
+  },
+  {
+    "itemId": 2,
+    "itemName": "Chicken Pizza",
+    "stock": 8
+  },
+  {
+    "itemId": 3,
+    "itemName": "Paneer Pizza",
+    "stock": 0
+  },
+  {
+    "itemId": 4,
+    "itemName": "Veg Pizza",
+    "stock": 0
+  },
+  {
+    "itemId": 5,
+    "itemName": "Veg Sandwich",
+    "stock": 1
+  },
+  {
+    "itemId": 6,
+    "itemName": "Chicken Sandwich",
+    "stock": 3
+  },
+  {
+    "itemId": 7,
+    "itemName": "Fruit Juice",
+    "stock": 5
+  },
+  {
+    "itemId": 8,
+    "itemName": "Fruit bowl",
+    "stock": 0
+  },
+  {
+    "itemId": 9,
+    "itemName": "Chicken Burger",
+    "stock": 7
+  },
+  {
+    "itemId": 10,
+    "itemName": "Veg Burger",
+    "stock": 7
+  },
+  {
+    "itemId": 11,
+    "itemName": "Paneer Burger",
+    "stock": 4
+  },
+  {
+    "itemId": 12,
+    "itemName": "Egg Burger",
+    "stock": 2
+  },
+  {
+    "itemId": 13,
+    "itemName": "Veg Rice",
+    "stock": 0
+  },
+  {
+    "itemId": 14,
+    "itemName": "Chinese Rice",
+    "stock": 4
+  },
+  {
+    "itemId": 15,
+    "itemName": "Veg Biryani",
+    "stock": 3
+  },
+  {
+    "itemId": 16,
+    "itemName": "Chicken Biryani",
+    "stock": 0
+  },
+  {
+    "itemId": 17,
+    "itemName": "Vadapav",
+    "stock": 0
+  },
+  {
+    "itemId": 18,
+    "itemName": "Samosa",
+    "stock": 9
+  },
+  {
+    "itemId": 19,
+    "itemName": "Kachori",
+    "stock": 4
+  },
+  {
+    "itemId": 20,
+    "itemName": "Bread Patties",
+    "stock": 1
+  }
+]

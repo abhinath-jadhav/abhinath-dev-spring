@@ -1,0 +1,51 @@
+server:
+  port: 8081
+
+
+# Application information
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  data:
+    mongodb:
+      uri: mongodb+srv://jabhinath1995:ch*#rzPi*sh26LC@cluster0.tllxlzz.mongodb.net/?retryWrites=true&w=majority
+      database: Nuline
+  application:
+    name: ms-admin
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jabhinath1995@gmail.com
+    password: yibhuxmzphogtmjl
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  devtools:
+    restart:
+      enabled: true
+
+
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+
+
+jwt:
+  secret: YmU2ZDc5MTE5ZDAxZGFmMGQyYzgzZmZlMmZkMWFiMjVmYzBjMzIzZDEzZGM5N2IxZGZlNjU0ODQ2MDQwNzI5ZjFhOGEyNGY4N2M5OTlhMjMxNDVlOTJkODBhMGVkNGM5NWE4NjAxZWI1Y2ZiNWVlN2JhNThkMGQxYjhmMzczYTA=

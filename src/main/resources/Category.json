@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Pizza",
+    "desc": "Select from Pizzas"
+  },
+  {
+    "name": "Sandwich",
+    "desc": "Select from Sandwiches"
+  },
+  {
+    "name": "Fruits",
+    "desc": "Select from Fruits"
+  },
+  {
+    "name": "Burger",
+    "desc": "Select from Burgers"
+  },
+  {
+    "name": "Rice",
+    "desc": "Select from Rice"
+  },
+  {
+    "name": "Burger",
+    "desc": "Select from sandwich"
+  }
+]
