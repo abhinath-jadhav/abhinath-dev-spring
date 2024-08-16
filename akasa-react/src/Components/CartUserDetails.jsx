@@ -26,14 +26,16 @@ const CartUserDetails = ({ handlePayment }) => {
     } else {
       setAuthenticated(true);
     }
-  }, [isAuthenticated]);
+  });
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    // if (!isAuthenticated) return;
     const user = getUser();
     setUser(user);
     const fetchFlight = async () => {
       const data = await UserApi.getFlightDetails();
+      // console.log(data);
+
       if (data.status == 200) {
         setFlights(data.flights);
       }

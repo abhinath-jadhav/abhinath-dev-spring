@@ -59,13 +59,17 @@ const Cart = () => {
   });
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    // if (!isAuthenticated) return;
     const fetchCartDetails = async () => {
       const data = await FoodApi.getSelected(items);
+      // console.log(data);
+
       setCartList(data.items);
     };
     const fetchInventory = async () => {
       const data = await InventoryApi.getAllInventories();
+      // console.log(data);
+
       if (data.status == 200) {
         const inventoryMap = {};
         data.inventories.forEach((item) => {
@@ -82,7 +86,7 @@ const Cart = () => {
     }
 
     fetchCartDetails();
-  }, [items]);
+  }, []);
 
   const handlePayment = async () => {
     //console.log(cartList);
