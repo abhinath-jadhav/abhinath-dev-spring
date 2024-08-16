@@ -1,8 +1,7 @@
 ## Springboot project
 ### JAVA 11 required to run
-- No need to set up any DB configuration used cloud and h2 Data base.
-- If you dont give Local DB details it will run on H2 database
-- We have used MongoDB as well that is on cloud no need to configure that
+### Node JS installed
+
 ## Log in
 Use the below user pass for testing if you don't register
 ### Credintials
@@ -22,7 +21,7 @@ You cannot see all menu untill you login.
 ## DATABASE
 - We Have used SQL
 - All the table will be created if you give you local DB address in YAML file.
-- If you don't give your local DB details and stop Springboot app all used data will be deleted.
+- If you don't give your local DB details it will use H2 DB hence if you stop Springboot app all used data will be deleted.
 - As I have configured H2 database by default.
 - Pass you details in src -> main -> resources -> yaml file
   ![Alt text](./src/main/resources/yaml.png?raw=true "Title")
