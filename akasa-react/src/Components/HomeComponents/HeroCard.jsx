@@ -1,5 +1,5 @@
 import React from "react";
-import fastfood from "../assets/fastfood.jpg";
+import fastfood from "../../assets/fastfood.jpg";
 import { Link } from "react-router-dom";
 
 const HeroCard = ({ img, title }) => {
