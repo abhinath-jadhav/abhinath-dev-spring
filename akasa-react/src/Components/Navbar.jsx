@@ -9,7 +9,7 @@ import { FaCartArrowDown, FaHome } from "react-icons/fa";
 import { MdFastfood } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import logo from "../assets/logo1.png";
-import { CartApi } from "../utils";
+import { CartApi, validUser } from "../utils";
 import { addAll } from "../Store/Feature/CartSlice";
 
 const Navbar = () => {
@@ -20,6 +20,8 @@ const Navbar = () => {
   const items = useSelector((state) => state.cartItems);
   const dispatch = useDispatch();
 
+  const [isAuth, setAuth] = useState(false);
+
   const handleSearch = (e) => {
     if (e.key === "Enter") {
       navigate("/search-result");
@@ -27,6 +29,8 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    setAuth(validUser());
+
     const saveUserCart = (event) => {
       event.preventDefault();
       event.returnValue = "";
@@ -133,21 +137,37 @@ const Navbar = () => {
               onClick={() => setIsVisible(!isVisible)}
               className="flex gap-3 group cursor-pointer relative hover:border-2 border-secondary p-2 rounded-md"
             >
-              <div className="flex items-center justify-center gap-2 text-secondary">
-                <CgProfile size={30} />
-                <h3 className="font-semibold text-lg hidden md:block">
-                  Profile
-                </h3>
-                <img
-                  src={Arrow}
-                  alt="arrow"
-                  className="group-hover:rotate-180 duration-500 mt-1 hidden md:block"
-                />
-              </div>
+              {isAuth ? (
+                <div className="flex items-center justify-center gap-2 text-secondary">
+                  <CgProfile size={30} />
+                  <h3 className="font-semibold text-lg hidden md:block">
+                    Profile
+                  </h3>
+                  <img
+                    src={Arrow}
+                    alt="arrow"
+                    className="group-hover:rotate-180 duration-500 mt-1 hidden md:block"
+                  />
+                </div>
+              ) : (
+                <Link to={"/login"}>
+                  <div className="flex items-center justify-center gap-2 text-secondary">
+                    <CgProfile size={30} />
+                    <h3 className="font-semibold text-lg hidden md:block">
+                      Login
+                    </h3>
+                    <img
+                      src={Arrow}
+                      alt="arrow"
+                      className="group-hover:rotate-180 duration-500 mt-1 hidden md:block"
+                    />
+                  </div>
+                </Link>
+              )}
               {/* Drop Down Menu */}
               <div
                 className={`${
-                  isVisible ? "block" : "hidden"
+                  isAuth && isVisible ? "block" : "hidden"
                 } w-screen md:w-[150px] absolute top-[56px] right-[-18px] md:left-0 p-4 text-sm border rounded-md shadow-md bg-white`}
               >
                 <div className="flex flex-col gap-5 items-end">
