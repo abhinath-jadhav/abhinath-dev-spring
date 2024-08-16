@@ -1,6 +1,6 @@
 import React from "react";
-import fastfood from "../../assets/fastfood.jpg";
-import StarRating from "../StarRating";
+import fastfood from "../assets/fastfood.jpg";
+import StarRating from "./StarRating";
 import { Link } from "react-router-dom";
 
 const FoodHomeCard = ({ id, name, description, img, price, diet, ratings }) => {

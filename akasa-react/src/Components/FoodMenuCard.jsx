@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import StarRating from "../StarRating.jsx";
+import StarRating from "./StarRating";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addItem,
   reduceQuantity,
   removeItem,
-} from "../../Store/Feature/CartSlice.js";
+} from "../Store/Feature/CartSlice.js";
 import Swal from "sweetalert2";
 
 const FoodMenuCard = ({
