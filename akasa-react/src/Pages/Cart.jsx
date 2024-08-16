@@ -71,7 +71,7 @@ const Cart = () => {
     }
 
     fetchCartDetails();
-  });
+  }, [items]);
 
   const handlePayment = async () => {
     //console.log(cartList);
@@ -142,10 +142,24 @@ const Cart = () => {
                       {"₹ "} {toPay}
                     </p>
                   </div>
+                  <div className="mt-5">
+                    <div className="flex justify-center mt-10">
+                      <button
+                        onClick={handlePayment}
+                        className="text-3xl border p-6 bg-green-700 text-white"
+                      >
+                        Complete Payment
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </Container>
+
+          <Container
+            className={"justify-start items-start w-[50%]"}
+          ></Container>
 
           <SubFooter
             desc={"Add few more items from our delicious menu !!"}

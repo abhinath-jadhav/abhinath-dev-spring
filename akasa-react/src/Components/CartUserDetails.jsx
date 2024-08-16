@@ -36,7 +36,7 @@ const CartUserDetails = ({ handlePayment }) => {
       </div>
       <div className="border w-[100%] border-black my-5 "></div>
       <div className="w-full">
-        <p className="text-2xl mb-5">Select flight</p>
+        <p className="text-2xl mb-5">Select your upcoming flight</p>
         <div className="flex flex-col gap-4">
           {flights.map((f) => (
             <div key={f.id} className="">
@@ -52,14 +52,6 @@ const CartUserDetails = ({ handlePayment }) => {
           <div className="flex flex-wrap justify-center">
             <TextRadioButton />
           </div>
-        </div>
-        <div className="w-full flex justify-center mt-10">
-          <button
-            onClick={handlePayment}
-            className="text-3xl border p-6 bg-green-700 text-white"
-          >
-            Complete Payment
-          </button>
         </div>
       </div>
     </div>

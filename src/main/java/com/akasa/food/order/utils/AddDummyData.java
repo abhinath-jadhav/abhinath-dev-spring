@@ -77,7 +77,17 @@ public class AddDummyData {
         flight2.setUserId("testuser@gmail.com");
         flight2.setPath("Mumbai To Pune");
 
-        flightRepo.saveAll(Arrays.asList(flight2, flight1));
+        Flight flight3 = new Flight();
+        flight3.setFlightId("QP 1982");
+        flight3.setUserId("testuser@gmail.com");
+        flight3.setPath("Mumbai To Bangalore");
+
+        Flight flight4 = new Flight();
+        flight4.setFlightId("QP 2456");
+        flight4.setUserId("testuser@gmail.com");
+        flight4.setPath("Bangalore to Mumbai");
+
+        flightRepo.saveAll(Arrays.asList(flight2, flight1, flight3, flight4));
 
         itemCategoryRepo.saveAll(DummyData.getCats());
         inventoryRepository.saveAll(DummyData.getInv());

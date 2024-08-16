@@ -36,7 +36,7 @@ public class UserService {
 
     public Response getFlights(String user) {
         log.info("Get Flights request for user :: {}", user);
-        List<Flight>  flights= flightRepo.findByUserId(user);
+        List<Flight>  flights= flightRepo.findAll();
         if(flights.isEmpty()){
             log.info("Categories not found in the DB");
             return ErrorResponse.builder()
