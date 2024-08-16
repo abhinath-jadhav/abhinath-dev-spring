@@ -45,9 +45,6 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: nuline/akasa-food-order
-          tags: |
-            type=git
-            prefix=latest
           
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
