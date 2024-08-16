@@ -21,9 +21,11 @@ const validUser = () => {
 
 const getUser = () => {
   const token = localStorage.getItem("token");
-  const decoded = jwtDecode(token);
+  if (token) {
+    const decoded = jwtDecode(token);
 
-  return decoded.sub;
+    return decoded.sub;
+  }
 };
 
 export { getUser };
