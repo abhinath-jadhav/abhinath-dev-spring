@@ -30,7 +30,7 @@ const Navbar = () => {
     const saveUserCart = (event) => {
       event.preventDefault();
       event.returnValue = "";
-      console.log(items); // Required for the confirmation dialog in some browsers
+      //console.log(items); // Required for the confirmation dialog in some browsers
       CartApi.saveCart(items);
     };
 
@@ -53,7 +53,7 @@ const Navbar = () => {
           Array.isArray(parsed) &&
             parsed.length > 0 &&
             dispatch(addAll(parsed));
-          console.log(parsed);
+          // console.log(parsed);
         }
       }
     };

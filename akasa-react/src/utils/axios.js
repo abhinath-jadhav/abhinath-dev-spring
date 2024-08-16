@@ -39,7 +39,7 @@ axiosAuth.interceptors.response.use(
     //console.error("No response received:", error);
     if (error.response) {
       const response = error.response;
-      console.log(response.status);
+      // console.log(response.status);
       if (response.status == 401) {
         localStorage.removeItem("token");
         //window.location.href = "/login";

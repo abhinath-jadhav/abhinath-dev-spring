@@ -22,7 +22,7 @@ const Home = () => {
             Array.isArray(parsed) &&
               parsed.length > 0 &&
               dispatch(addAll(parsed));
-            console.log(parsed);
+            //console.log(parsed);
           }
         }
       }

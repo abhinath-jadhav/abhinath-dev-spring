@@ -79,7 +79,7 @@ const Cart = () => {
       payment: toPay,
       items: items,
     };
-    console.log(data);
+    //console.log(data);
     const res = await CartApi.completeOrder(data);
     if (res.status == 200) {
       dispatch(addAll([]));

@@ -18,7 +18,7 @@ const Register = () => {
     try {
       const response = await axiosNoAuth.post("/auth/register", values);
 
-      console.log("Response:", response.data);
+      // console.log("Response:", response.data);
       const data = response.data;
 
       if (data.status == 200) {
