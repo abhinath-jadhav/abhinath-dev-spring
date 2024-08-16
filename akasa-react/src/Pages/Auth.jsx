@@ -20,7 +20,7 @@ const Auth = () => {
   }, []);
 
   if (valid === null) {
-    return <div>Loading...</div>; // Optional: show a loading indicator while checking
+    return <div>Loading...</div>;
   }
 
   return <div>{valid ? <Outlet /> : <Login />}</div>;
