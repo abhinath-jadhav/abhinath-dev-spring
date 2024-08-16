@@ -16,7 +16,7 @@ Defined DATA dummy data like flight details for this user.
 You cannot see all menu untill you login.
 
 ## DATABASE
-
+- We Have used SQL
 - All the table will be created if you give you local DB address in YAML file.
 - If you don't give your local DB details and stop Springboot app all used data will be deleted.
 - As I have configured H2 database by default.
@@ -27,6 +27,7 @@ You cannot see all menu untill you login.
 - url : http://localhost:8081/h2-console/
 - user : sa
 - pass : password
+
 ## Orders
 You can see all your order in on order page under profile button
 
