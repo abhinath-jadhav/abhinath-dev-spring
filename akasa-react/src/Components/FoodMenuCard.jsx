@@ -86,9 +86,9 @@ const FoodMenuCard = ({
   //console.log(classes);
 
   return (
-    <div className="w-full md:w-auto flex flex-col justify-center items-center gap-2 p-2 rounded-md">
+    <div className="w-full h-56 md:w-auto flex flex-col justify-center items-center gap-2 p-2 rounded-md">
       <div
-        className={`${classes} text-slate-50 flex justify-between px-4 items-center w-[100%] md:min-w-[600px] max-w-sm border border-gray-200 rounded-lg shadow`}
+        className={`${classes} h-full text-slate-50 flex justify-between px-4 items-center w-[100%] md:min-w-[600px] max-w-sm border border-gray-200 rounded-lg shadow`}
       >
         <div className="p-4">
           <img
@@ -97,7 +97,7 @@ const FoodMenuCard = ({
             alt="product image"
           />
         </div>
-        <div className="hidden font-normal md:block md:w-[40%] p-8">
+        <div className="hidden font-normal md:block md:w-[40%] p-2">
           {description}
         </div>
 
