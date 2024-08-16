@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import FoodItemCard from "./FoodHomeCard";
-import Container from "../Container";
-import { FoodApi } from "../../utils";
+import Container from "./Container";
+import { FoodApi } from "../utils";
 
 const HomeBody = () => {
   const [foodItems, setFoodItems] = useState([]);
