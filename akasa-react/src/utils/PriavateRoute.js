@@ -5,7 +5,7 @@ const validUser = () => {
   //console.log(token);
   if (!token) return false;
   try {
-    console.log(typeof token);
+    //console.log(typeof token);
 
     const decoded = jwtDecode(token);
     const currentTime = Date.now() / 1000;
