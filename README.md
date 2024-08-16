@@ -6,7 +6,8 @@ Use npm run dev
 No need to set up any DB configuration used cloud and h2 Data base.
 
 ## Log in
-Use the below user pass for testing if you don't  register
+Use the below user pass for testing if you don'tregister
+### Credintials
 User : testuser@gmail.com
 Pass: testpass
 
