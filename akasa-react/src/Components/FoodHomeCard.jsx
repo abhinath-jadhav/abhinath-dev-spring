@@ -25,7 +25,7 @@ const FoodHomeCard = ({ id, name, description, img, price, diet, ratings }) => {
               {"RS "}
               {price}
             </p>
-            <Link to={"/menu"}>
+            <Link to={"/auth/menu"}>
               <p className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center ">
                 Explore
               </p>
