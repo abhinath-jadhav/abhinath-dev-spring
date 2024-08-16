@@ -8,7 +8,7 @@ import Auth from "./Pages/Auth";
 const App = () => {
   return (
     <Router>
-      <div>
+      <div className="max-w-screen-sm md:max-w-full">
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Home />} />

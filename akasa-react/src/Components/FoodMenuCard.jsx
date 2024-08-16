@@ -7,6 +7,7 @@ import {
   removeItem,
 } from "../Store/Feature/CartSlice.js";
 import Swal from "sweetalert2";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 const FoodMenuCard = ({
   id,
@@ -86,7 +87,7 @@ const FoodMenuCard = ({
   //console.log(classes);
 
   return (
-    <div className="w-full h-56 md:w-auto flex flex-col justify-center items-center gap-2 p-2 rounded-md">
+    <div className="w-full h-56 md:w-auto flex flex-col justify-center items-center gap-2 md:p-2 rounded-md">
       <div
         className={`${classes} h-full text-slate-50 flex justify-between px-4 items-center w-[100%] md:min-w-[600px] max-w-sm border border-gray-200 rounded-lg shadow`}
       >
@@ -111,24 +112,30 @@ const FoodMenuCard = ({
             {!showAddToCart ? (
               <div
                 className="h-[48px] flex justify-between text-primery bg-slate-50
-                 font-medium rounded-lg text-sm text-center
+                 font-medium rounded-lg text-sm text-center select-none
               "
               >
                 <div
                   onClick={handleReduce}
-                  className=" bg-blue-700 rounded-l-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                  className=" bg-blue-700 rounded-l-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300 cursor-pointer"
                 >
-                  <p className="text-slate-50 px-5 py-3 font-extrabold">-</p>
+                  <p className="text-slate-50 flex h-full justify-center  items-center p-4">
+                    <FaMinus className="" size={12} />
+                  </p>
                 </div>
 
-                <div className=" max-w-[40px] flex justify-center rounded-l-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
-                  <p className="px-5 py-3 font-extrabold">{value?.quantity}</p>
+                <div className="max-w-[40px] flex justify-center items-center rounded-l-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
+                  <p className="px-5 py-3 text-lg text-black">
+                    {value?.quantity}
+                  </p>
                 </div>
                 <div
                   onClick={handleAdd}
-                  className=" bg-blue-700 rounded-r-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                  className=" bg-blue-700 rounded-r-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300 cursor-pointer"
                 >
-                  <p className="text-slate-50 px-5 py-3 font-extrabold">+</p>
+                  <p className="text-slate-50 flex justify-center items-center h-full w-full p-4">
+                    <FaPlus className="" size={12} />
+                  </p>
                 </div>
               </div>
             ) : (
