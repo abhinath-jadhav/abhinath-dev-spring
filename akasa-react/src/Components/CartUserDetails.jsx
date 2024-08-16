@@ -29,7 +29,7 @@ const CartUserDetails = ({ handlePayment }) => {
   });
 
   useEffect(() => {
-    // if (!isAuthenticated) return;
+    //if (isAuthenticated) return;
     const user = getUser();
     setUser(user);
     const fetchFlight = async () => {

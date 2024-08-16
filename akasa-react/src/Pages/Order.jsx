@@ -29,7 +29,7 @@ const Order = () => {
   });
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    //if (!isAuthenticated) return;
     const fetchOrders = async () => {
       const res = await UserApi.getAllOrders();
       //console.log(res);

@@ -59,7 +59,7 @@ const Cart = () => {
   });
 
   useEffect(() => {
-    // if (!isAuthenticated) return;
+    //if (isAuthenticated) return;
     const fetchCartDetails = async () => {
       const data = await FoodApi.getSelected(items);
       // console.log(data);
@@ -86,7 +86,7 @@ const Cart = () => {
     }
 
     fetchCartDetails();
-  }, []);
+  }, [isAuthenticated]);
 
   const handlePayment = async () => {
     //console.log(cartList);

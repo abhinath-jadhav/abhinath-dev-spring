@@ -30,7 +30,7 @@ const MenuBody = ({ filteredFoodItems }) => {
   });
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    //if (isAuthenticated) return;
     const fetchInventory = async () => {
       const data = await InventoryApi.getAllInventories();
       if (data.status == 200) {

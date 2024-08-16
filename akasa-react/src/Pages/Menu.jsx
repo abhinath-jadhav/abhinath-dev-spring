@@ -39,7 +39,7 @@ const Menu = () => {
   });
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    //if (!isAuthenticated) return;
 
     const fetchData = async () => {
       const data = await FoodApi.fetchFoodData("/food/all");
