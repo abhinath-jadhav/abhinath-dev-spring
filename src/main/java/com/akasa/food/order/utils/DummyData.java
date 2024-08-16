@@ -153,7 +153,7 @@ public class DummyData {
             "    \"category\": 1,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/f37cc995c130a39daae423f075bd23d4\",\n" +
-            "    \"ratings\": 4,\n" +
+            "    \"ratings\": 4.0,\n" +
             "    \"featured\": false\n" +
             "  },\n" +
             "  {\n" +
@@ -163,7 +163,7 @@ public class DummyData {
             "    \"category\": 1,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/fe37811c8d1a9b0c5923ff1a60926b7d\",\n" +
-            "    \"ratings\": 4,\n" +
+            "    \"ratings\": 4.0,\n" +
             "    \"featured\": true\n" +
             "  },\n" +
             "  {\n" +
@@ -183,7 +183,7 @@ public class DummyData {
             "    \"category\": 1,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/iugtwbuqpi6enzij2r24\",\n" +
-            "    \"ratings\": 5,\n" +
+            "    \"ratings\": 5.0,\n" +
             "    \"featured\": true\n" +
             "  },\n" +
             "  {\n" +
@@ -203,7 +203,7 @@ public class DummyData {
             "    \"category\": 2,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/FOOD_CATALOG/IMAGES/CMS/2024/6/24/3de5c86f-edb5-477e-92d7-ef22e63b2154_9c5e49df-0655-4eef-bf14-02352ba21fe3.JPG\",\n" +
-            "    \"ratings\": 4,\n" +
+            "    \"ratings\": 4.0,\n" +
             "    \"featured\": true\n" +
             "  },\n" +
             "  {\n" +
@@ -213,7 +213,7 @@ public class DummyData {
             "    \"category\": 3,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/s4ddcyrmerhips45jitr\",\n" +
-            "    \"ratings\": 4,\n" +
+            "    \"ratings\": 4.0,\n" +
             "    \"featured\": false\n" +
             "  },\n" +
             "  {\n" +
@@ -243,7 +243,7 @@ public class DummyData {
             "    \"category\": 4,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/37035f5eedcd36d4740be311a3e407f2\",\n" +
-            "    \"ratings\": 5,\n" +
+            "    \"ratings\": 5.0,\n" +
             "    \"featured\": true\n" +
             "  },\n" +
             "  {\n" +
@@ -253,7 +253,7 @@ public class DummyData {
             "    \"category\": 4,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/FOOD_CATALOG/IMAGES/CMS/2024/4/17/9e2b428f-de45-457c-89ec-8868616800e3_fbcb04f9-4af0-4b1d-b51c-6568d9f78509.jpeg\",\n" +
-            "    \"ratings\": 4,\n" +
+            "    \"ratings\": 4.0,\n" +
             "    \"featured\": false\n" +
             "  },\n" +
             "  {\n" +
@@ -263,7 +263,7 @@ public class DummyData {
             "    \"category\": 4,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/FOOD_CATALOG/IMAGES/CMS/2024/7/20/b41f9c09-218e-4848-ae8a-25e931412165_084098cd-f08f-447f-a3da-3234a9b06aff.jpg\",\n" +
-            "    \"ratings\": 5,\n" +
+            "    \"ratings\": 5.0,\n" +
             "    \"featured\": true\n" +
             "  },\n" +
             "  {\n" +
@@ -313,7 +313,7 @@ public class DummyData {
             "    \"category\": 6,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/onwcfeuufp4ki6tykxcr\",\n" +
-            "    \"ratings\": 5,\n" +
+            "    \"ratings\": 5.0,\n" +
             "    \"featured\": false\n" +
             "  },\n" +
             "  {\n" +
@@ -323,7 +323,7 @@ public class DummyData {
             "    \"category\": 6,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/xwfcgbriwkfttaqsrt2x\",\n" +
-            "    \"ratings\": 2,\n" +
+            "    \"ratings\": 2.0,\n" +
             "    \"featured\": false\n" +
             "  },\n" +
             "  {\n" +
@@ -333,7 +333,7 @@ public class DummyData {
             "    \"category\": 6,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/cc3b9da18bd496d22163a766c911dee3\",\n" +
-            "    \"ratings\": 4,\n" +
+            "    \"ratings\": 4.0,\n" +
             "    \"featured\": false\n" +
             "  },\n" +
             "  {\n" +

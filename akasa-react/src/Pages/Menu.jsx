@@ -155,10 +155,10 @@ const Menu = () => {
         </div>
         <div className="md:w-[80%] flex justify-between flex-wrap mt-5">
           <div className="cursor-pointer" onClick={() => selectCategory(111)}>
-            <Category name={"All"} />
+            <Category name={"All"} selectId={selectedCats.id} id={111} />
           </div>
           <div className="cursor-pointer" onClick={() => selectCategory(222)}>
-            <Category name={"Featured"} />
+            <Category name={"Featured"} selectId={selectedCats.id} id={222} />
           </div>
 
           {categories.map((cat) => (
@@ -167,7 +167,7 @@ const Menu = () => {
               key={cat.id}
               onClick={() => selectCategory(cat.id)}
             >
-              <Category {...cat} />
+              <Category {...cat} selectId={selectedCats.id} />
             </div>
           ))}
         </div>
