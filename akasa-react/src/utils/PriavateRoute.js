@@ -5,8 +5,6 @@ const validUser = () => {
   //console.log(token);
   if (!token) return false;
   try {
-    //console.log(typeof token);
-
     const decoded = jwtDecode(token);
     const currentTime = Date.now() / 1000;
 
@@ -23,11 +21,9 @@ const validUser = () => {
 
 const getUser = () => {
   const token = localStorage.getItem("token");
-  if (token) {
-    const decoded = jwtDecode(token);
+  const decoded = jwtDecode(token);
 
-    return decoded.sub;
-  }
+  return decoded.sub;
 };
 
 export { getUser };

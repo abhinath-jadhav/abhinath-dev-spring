@@ -8,9 +8,9 @@ class CartApi {
         item: o.item,
         quantity: o.quantity,
       }));
-      //  console.log(newList);
+      console.log(newList);
       const res = await axiosAuth.post("/user/carts", items);
-      // console.log(res);
+      console.log(res);
     }
   }
 
