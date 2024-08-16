@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FoodApi, validUser } from "../utils";
+import { FoodApi } from "../utils";
 import { useNavigate } from "react-router-dom";
 import { Category, Container, FoodMenuCard, SubFooter } from "../Components";
 import Swal from "sweetalert2";
@@ -22,18 +22,6 @@ const Menu = () => {
   const nav = useNavigate();
 
   useEffect(() => {
-    const valid = validUser();
-    if (!valid) {
-      nav("/login");
-      Swal.fire({
-        title: "Authentication Required",
-        text: "Please login to continue.",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
-      return;
-    }
-
     const fetchData = async () => {
       const data = await FoodApi.fetchFoodData("/food/all");
 

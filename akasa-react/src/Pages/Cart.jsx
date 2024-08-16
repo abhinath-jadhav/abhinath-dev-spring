@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CartApi, FoodApi, InventoryApi, validUser } from "../utils";
+import { CartApi, FoodApi, InventoryApi } from "../utils";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
@@ -40,16 +40,6 @@ const Cart = () => {
   });
 
   useEffect(() => {
-    if (!validUser()) {
-      navigate("/login");
-      Swal.fire({
-        title: "Authentication Required",
-        text: "Please login to continue.",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
-      return;
-    }
     const fetchCartDetails = async () => {
       const data = await FoodApi.getSelected(items);
       setCartList(data.items);

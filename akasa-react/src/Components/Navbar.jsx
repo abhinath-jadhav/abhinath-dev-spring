@@ -112,7 +112,7 @@ const Navbar = () => {
                 <h3 className="hidden md:block">Home</h3>
               </div>
             </Link>
-            <Link to={"/menu"}>
+            <Link to={"/auth/menu"}>
               <div className="flex items-center justify-center font-semibold gap-2 text-secondary">
                 <MdFastfood size={30} />
                 <h3 className="hidden md:block">Menu</h3>
@@ -120,7 +120,10 @@ const Navbar = () => {
             </Link>
 
             {/* Cart */}
-            <Link to={"/cart"} className="flex gap-2 relative text-secondary">
+            <Link
+              to={"/auth/cart"}
+              className="flex gap-2 relative text-secondary"
+            >
               {cartItems.length !== 0 && (
                 <div className="absolute flex justify-center items-center text-xs top-[-0.3rem] left-2 bg-orange-600  h-[16px] w-[16px] rounded-full">
                   <p>{cartItems[0].quantity}</p>
@@ -177,7 +180,7 @@ const Navbar = () => {
                       <h4>My Profile</h4>
                     </div>
                   </Link> */}
-                  <Link to={"/orders"}>
+                  <Link to={"/auth/orders"}>
                     <div className="flex gap-2 items-center">
                       <img className="h-[20px]" src={Profile} alt="" />
                       <h4>Orders</h4>
