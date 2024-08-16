@@ -7,7 +7,7 @@ const itemsSlice = createSlice({
   reducers: {
     addItem: (state, action) => {
       const item = action.payload;
-      console.log(item);
+      // console.log(item);
       const existingItem = state.find((i) => i.item === item);
       if (existingItem) {
         // Update quantity if item exists
@@ -31,7 +31,7 @@ const itemsSlice = createSlice({
       }
     },
     addAll: (state, action) => {
-      console.log(action.payload);
+      //console.log(action.payload);
       return action.payload;
     },
   },

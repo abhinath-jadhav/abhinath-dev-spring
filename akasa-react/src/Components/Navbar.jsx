@@ -62,9 +62,16 @@ const Navbar = () => {
   }, [dispatch]);
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("isLogged");
-    localStorage.removeItem("session");
+    const saveUserCart = async () => {
+      // Required for the confirmation dialog in some browsers
+      const data = await CartApi.saveCart(items);
+      localStorage.removeItem("token");
+      localStorage.removeItem("isLogged");
+      localStorage.removeItem("cart");
+    };
+
+    saveUserCart();
+
     navigate("/login");
   };
 

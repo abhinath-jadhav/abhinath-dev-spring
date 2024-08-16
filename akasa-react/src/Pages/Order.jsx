@@ -8,7 +8,7 @@ const Order = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       const res = await UserApi.getAllOrders();
-      console.log(res);
+      //console.log(res);
 
       if (res.status == 200) {
         setOrders(res.orders);

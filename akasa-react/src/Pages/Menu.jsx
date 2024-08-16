@@ -66,9 +66,9 @@ const Menu = () => {
     return () => {
       const jsonString = JSON.stringify(items);
       const encodedString = encodeURIComponent(jsonString);
-      document.cookie = `myObject=${encodedString}; max-age=${
-        7 * 24 * 60 * 60
-      }; path=/`;
+      // document.cookie = `myObject=${encodedString}; max-age=${
+      //   7 * 24 * 60 * 60
+      // }; path=/`;
 
       localStorage.setItem("cart", jsonString);
     };

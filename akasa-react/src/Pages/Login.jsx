@@ -20,7 +20,7 @@ const Login = () => {
       const response = await axiosNoAuth.post("/auth/sign-in", values);
 
       const data = response.data;
-      console.log(data.token);
+      //console.log(data.token);
       if (data.status == 200) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("session", data.user);
