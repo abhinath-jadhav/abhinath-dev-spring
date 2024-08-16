@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FoodMenuCard from "./FoodMenuCard";
-import { InventoryApi, validUser } from "../utils";
+import { InventoryApi, validUser } from "../../utils";
 import { useDispatch } from "react-redux";
-import { pushInventory } from "../Store/Feature/inventorySlice";
+import { pushInventory } from "../../Store/Feature/inventorySlice";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 

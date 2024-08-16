@@ -3,7 +3,7 @@ import { FoodApi, validUser } from "../utils";
 import { useNavigate } from "react-router-dom";
 import { Category, Container, FoodMenuCard, SubFooter } from "../Components";
 import Swal from "sweetalert2";
-import MenuBody from "../Components/MenuBody";
+import MenuBody from "../Components/MenuComponents/MenuBody";
 import { useSelector } from "react-redux";
 
 const Menu = () => {

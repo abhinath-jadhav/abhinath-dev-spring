@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import Container from "./Container";
+import Container from "../Container";
 import HeroCard from "./HeroCard";
-import fastfood from "../assets/fastfood.jpg";
-import pizza from "../assets/pizza.jpg";
-import burger from "../assets/burger.jpeg";
-import sandwich from "../assets/sandwich.jpg";
-import rice from "../assets/rice.jpg";
-import table from "../assets/table.jpg";
-import logo from "../assets/logo.svg";
-import fruit from "../assets/fruit.png";
-import { FoodApi } from "../utils";
+import fastfood from "../../assets/fastfood.jpg";
+import pizza from "../../assets/pizza.jpg";
+import burger from "../../assets/burger.jpeg";
+import sandwich from "../../assets/sandwich.jpg";
+import rice from "../../assets/rice.jpg";
+import table from "../../assets/table.jpg";
+import logo from "../../assets/logo.svg";
+import fruit from "../../assets/fruit.png";
+import { FoodApi } from "../../utils";
 
 const HomeSlider = () => {
   const [categories, setCategories] = useState([]);
