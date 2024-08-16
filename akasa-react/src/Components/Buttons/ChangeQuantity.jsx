@@ -29,8 +29,8 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
         confirmButtonText: "OK",
       });
       const filered = items.filter((i) => i.item != id);
-      //console.log(filered);
-      //console.log(id);
+      console.log(filered);
+      console.log(id);
       dispatch(addAll(filered));
     }
   };
