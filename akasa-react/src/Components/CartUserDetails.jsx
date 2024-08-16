@@ -1,14 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { UserApi, getUser } from "../utils";
+import { UserApi, getUser, validUser } from "../utils";
 import FlightCard from "./Cards/FlightCard";
 import TextRadioButton from "./Buttons/CustomRadioButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const CartUserDetails = ({ handlePayment }) => {
   const [user, setUser] = useState("");
   const [flights, setFlights] = useState([]);
 
+  const nav = useNavigate();
+  const [isAuthenticated, setAuthenticated] = useState(false);
+
   useEffect(() => {
+    const valid = validUser();
+    if (!valid) {
+      nav("/login");
+      Swal.fire({
+        title: "Authentication Required",
+        text: "Please login to continue.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    } else {
+      setAuthenticated(true);
+    }
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
     const user = getUser();
     setUser(user);
     const fetchFlight = async () => {

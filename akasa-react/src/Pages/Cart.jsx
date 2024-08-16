@@ -22,6 +22,25 @@ const Cart = () => {
   const inventoryMap = useSelector((state) => state.ineventory);
   const [toPay, setToPay] = useState(0);
 
+  const [isAuthenticated, setAuthenticated] = useState(false);
+  const nav = useNavigate();
+
+  useEffect(() => {
+    const valid = validUser();
+    if (!valid) {
+      nav("/login");
+      Swal.fire({
+        title: "Authentication Required",
+        text: "Please login to continue.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    } else {
+      setAuthenticated(true);
+    }
+  }, [isAuthenticated]);
+
   useEffect(() => {
     //console.log(cartList);
     try {
@@ -40,15 +59,7 @@ const Cart = () => {
   });
 
   useEffect(() => {
-    if (!validUser()) {
-      navigate("/login");
-      Swal.fire({
-        title: "Authentication Required",
-        text: "Please login to continue.",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
-    }
+    if (!isAuthenticated) return;
     const fetchCartDetails = async () => {
       const data = await FoodApi.getSelected(items);
       setCartList(data.items);

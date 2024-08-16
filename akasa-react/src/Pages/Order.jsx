@@ -1,11 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { UserApi } from "../utils";
+import { UserApi, validUser } from "../utils";
 import { Container, SubFooter } from "../Components";
 import { PiSealWarningFill } from "react-icons/pi";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Order = () => {
   const [orderlist, setOrders] = useState(null);
+
+  const nav = useNavigate();
+
+  const [isAuthenticated, setAuthenticated] = useState(false);
+
   useEffect(() => {
+    const valid = validUser();
+    if (!valid) {
+      nav("/login");
+      Swal.fire({
+        title: "Authentication Required",
+        text: "Please login to continue.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    } else {
+      setAuthenticated(true);
+    }
+  });
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
     const fetchOrders = async () => {
       const res = await UserApi.getAllOrders();
       console.log(res);
@@ -14,9 +38,8 @@ const Order = () => {
         setOrders(res.orders);
       }
     };
-
     fetchOrders();
-  }, []);
+  }, [isAuthenticated]);
   return (
     <div className="py-10">
       {orderlist ? (
