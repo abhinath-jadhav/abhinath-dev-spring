@@ -22,25 +22,6 @@ const Cart = () => {
   const inventoryMap = useSelector((state) => state.ineventory);
   const [toPay, setToPay] = useState(0);
 
-  const [isAuthenticated, setAuthenticated] = useState(false);
-  const nav = useNavigate();
-
-  useEffect(() => {
-    const valid = validUser();
-    if (!valid) {
-      nav("/login");
-      Swal.fire({
-        title: "Authentication Required",
-        text: "Please login to continue.",
-        icon: "warning",
-        confirmButtonText: "OK",
-      });
-      return;
-    } else {
-      setAuthenticated(true);
-    }
-  }, [isAuthenticated]);
-
   useEffect(() => {
     //console.log(cartList);
     try {
@@ -59,17 +40,22 @@ const Cart = () => {
   });
 
   useEffect(() => {
-    //if (isAuthenticated) return;
+    if (!validUser()) {
+      navigate("/login");
+      Swal.fire({
+        title: "Authentication Required",
+        text: "Please login to continue.",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
     const fetchCartDetails = async () => {
       const data = await FoodApi.getSelected(items);
-      // console.log(data);
-
       setCartList(data.items);
     };
     const fetchInventory = async () => {
       const data = await InventoryApi.getAllInventories();
-      // console.log(data);
-
       if (data.status == 200) {
         const inventoryMap = {};
         data.inventories.forEach((item) => {
@@ -86,7 +72,7 @@ const Cart = () => {
     }
 
     fetchCartDetails();
-  }, [isAuthenticated]);
+  }, [items]);
 
   const handlePayment = async () => {
     //console.log(cartList);
@@ -94,7 +80,7 @@ const Cart = () => {
       payment: toPay,
       items: items,
     };
-    //console.log(data);
+    console.log(data);
     const res = await CartApi.completeOrder(data);
     if (res.status == 200) {
       dispatch(addAll([]));

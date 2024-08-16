@@ -20,7 +20,6 @@ const Menu = () => {
 
   const items = useSelector((state) => state.cartItems);
   const nav = useNavigate();
-  const [isAuthenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
     const valid = validUser();
@@ -33,13 +32,7 @@ const Menu = () => {
         confirmButtonText: "OK",
       });
       return;
-    } else {
-      setAuthenticated(true);
     }
-  });
-
-  useEffect(() => {
-    //if (!isAuthenticated) return;
 
     const fetchData = async () => {
       const data = await FoodApi.fetchFoodData("/food/all");
@@ -79,7 +72,7 @@ const Menu = () => {
 
       localStorage.setItem("cart", jsonString);
     };
-  }, [isAuthenticated]);
+  }, []);
 
   // TO filter based on category
   const selectCategory = (cat, diet1) => {
