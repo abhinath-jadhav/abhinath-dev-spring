@@ -14,10 +14,7 @@ import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -102,7 +99,7 @@ public class FoodItemService {
                 .build();
     }
 
-    public Response selectedItems(List<CartItem> list) {
+    public Response selectedItems(Set<CartItem> list) {
         log.info("Request received for get selected food items by :: {}", MDC.get("user"));
 
         Map<Long, CartItem> map = list.stream().collect(Collectors.toMap(CartItem::getItem, Function.identity()));

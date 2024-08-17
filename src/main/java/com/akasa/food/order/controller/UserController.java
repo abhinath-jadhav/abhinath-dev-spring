@@ -45,6 +45,15 @@ public class UserController {
         return ResponseEntity.ok(res);
     }
 
+    @GetMapping("/carts/details")
+    public ResponseEntity<?> getUserCartDetails(){
+            String user = MDC.get("user");
+            Response res = userService.getUserCartDetails(user);
+            return ResponseEntity.ok(res);
+    }
+
+
+
     @PostMapping("/order")
     public ResponseEntity<?> completeOrder(@RequestBody Order order){
         String user = MDC.get("user");

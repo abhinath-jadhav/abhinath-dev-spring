@@ -8,6 +8,7 @@ import {
   removeItem,
 } from "../../Store/Feature/CartSlice.js";
 import Swal from "sweetalert2";
+import { CartApi } from "../../utils/index.js";
 
 const ChangeQuantity = ({ id, qty, inventory, price }) => {
   const dispatch = useDispatch();
@@ -19,7 +20,16 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
   const handleReduce = () => {
     if (value.quantity > 1) {
       dispatch(reduceQuantity(id));
-
+      const reduced = items.map((i) => {
+        if (i.item == id) {
+          return {
+            item: i.item,
+            quantity: i.quantity - 1,
+          };
+        }
+        return i;
+      });
+      CartApi.saveCart(reduced);
       //dispatch(removeItem(id));
     } else {
       Swal.fire({
@@ -32,6 +42,7 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
       //console.log(filered);
       //console.log(id);
       dispatch(addAll(filered));
+      CartApi.saveCart(filered);
     }
   };
 
@@ -48,6 +59,16 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
         return;
       } else {
         dispatch(addItem(id));
+        const added = items.map((i) => {
+          if (i.item == id) {
+            return {
+              item: i.item,
+              quantity: i.quantity + 1,
+            };
+          }
+          return i;
+        });
+        CartApi.saveCart(added);
       }
       //setShowAddToCart(false);
     }
@@ -64,14 +85,14 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
         </div>
 
         <div className="max-w-[40px] flex justify-center focus:ring-4 focus:outline-none focus:ring-blue-300">
-          <p className="">{value?.quantity}</p>
+          <p className="">{qty}</p>
         </div>
         <div onClick={handleAdd} className="cursor-pointer">
           <FaPlus className="text-green-600 pr-1" size={15} />
         </div>
       </div>
       <p className="w-[70px] text-end">
-        {"₹ "} {price * value?.quantity}
+        {"₹ "} {price * qty}
       </p>
     </div>
   );

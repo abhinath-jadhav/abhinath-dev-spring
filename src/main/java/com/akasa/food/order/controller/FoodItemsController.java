@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/food")
@@ -35,7 +36,7 @@ public class FoodItemsController {
     }
 
     @PostMapping("/ids")
-    public ResponseEntity<Response> getAllFoodItems(@RequestBody List<CartItem> list){
+    public ResponseEntity<Response> getAllFoodItems(@RequestBody Set<CartItem> list){
         Response response = foodItemService.selectedItems(list);
         return ResponseEntity.ok(response);
     }

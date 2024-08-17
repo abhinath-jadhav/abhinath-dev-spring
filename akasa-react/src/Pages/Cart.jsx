@@ -44,7 +44,8 @@ const Cart = () => {
 
   const fetchData = async () => {
     const fetchCartDetails = async () => {
-      const data = await FoodApi.getSelected(items);
+      const data = await FoodApi.getCartDetails();
+
       setCartList(data.items);
     };
     const fetchInventory = async () => {

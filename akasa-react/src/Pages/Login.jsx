@@ -7,12 +7,16 @@ import { axiosNoAuth } from "../utils/axios";
 import { Container, SubFooter } from "../Components";
 import { validUser } from "../utils";
 import Swal from "sweetalert2";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth } from "../Store/Feature/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   useEffect(() => {
-    const check = validUser();
-    if (check) {
+    if (auth) {
       navigate("/");
     }
   });
@@ -25,6 +29,7 @@ const Login = () => {
       if (data.status == 200) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("session", data.user);
+        dispatch(setAuth());
         navigate("/");
         resetForm();
       } else {

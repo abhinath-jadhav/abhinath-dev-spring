@@ -3,11 +3,15 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { validUser } from "../utils";
 import Swal from "sweetalert2";
 import Login from "./Login";
+import { useSelector } from "react-redux";
 
 const Auth = () => {
   const [valid, setValid] = useState(null);
+
+  const auth = useSelector((state) => state.auth);
+
   useEffect(() => {
-    if (validUser()) {
+    if (auth) {
       setValid(true);
     } else {
       Swal.fire({

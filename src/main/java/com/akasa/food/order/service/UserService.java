@@ -34,6 +34,9 @@ public class UserService {
     @Autowired
     private InventoryRepository inventoryRepository;
 
+    @Autowired
+    private FoodItemService foodItemService;
+
     public Response getFlights(String user) {
         log.info("Get Flights request for user :: {}", user);
         List<Flight>  flights= flightRepo.findAll();
@@ -54,7 +57,7 @@ public class UserService {
     }
 
     public Response getCartItems(String user) {
-        log.info("Get Flights request for user :: {}", user);
+        log.info("Get Cart list request for user :: {}", user);
 
         UserCart cart =  cartRepository.findByUserId(user);
 
@@ -193,6 +196,26 @@ public class UserService {
                 .message("Success")
                 .orders(orders)
                 .build();
+
+    }
+
+    public Response getUserCartDetails(String user) {
+
+        UserCart cart =  cartRepository.findByUserId(user);
+
+        if(cart == null || cart.getItems() == null || cart.getItems().isEmpty()){
+            log.info("Categories not found in the DB");
+            return ErrorResponse.builder()
+                    .status("500")
+                    .error("Empty data")
+                    .message("Please try after some time")
+                    .build();
+        }
+
+        Response response = foodItemService.selectedItems(cart.getItems());
+
+        log.info("User Cart :: {}", response);
+        return response;
 
     }
 }

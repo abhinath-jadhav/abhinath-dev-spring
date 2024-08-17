@@ -30,6 +30,16 @@ class FoodApi {
       return error;
     }
   };
+
+  static getCartDetails = async () => {
+    try {
+      const response = await axiosAuth.get("/user/carts/details");
+      //console.log(response);
+      return response.data;
+    } catch (error) {
+      return error;
+    }
+  };
 }
 
 export default FoodApi;

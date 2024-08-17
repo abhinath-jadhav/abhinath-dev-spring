@@ -11,6 +11,7 @@ import { CgProfile } from "react-icons/cg";
 import logo from "../assets/logo1.png";
 import { CartApi, validUser } from "../utils";
 import { addAll } from "../Store/Feature/CartSlice";
+import { setAuth } from "../Store/Feature/authSlice";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -18,9 +19,10 @@ const Navbar = () => {
 
   const [cartItems, setCartItems] = useState([]);
   const items = useSelector((state) => state.cartItems);
+  const isAuth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const [isAuth, setAuth] = useState(false);
+  // const [isAuth, setAuth] = useState(false);
 
   const handleSearch = (e) => {
     if (e.key === "Enter") {
@@ -44,31 +46,37 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    setAuth(validUser());
-  }, []);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     const fetchCarts = async () => {
       const data = await CartApi.getAllCarts();
       if (data != null && data.status == 200) {
         dispatch(addAll(data.list));
+      } else {
+        const items = localStorage.getItem("cart");
+        if (items) {
+          const parsed = JSON.parse(items);
+          Array.isArray(parsed) &&
+            parsed.length > 0 &&
+            dispatch(addAll(parsed));
+          console.log(parsed);
+        }
       }
     };
 
     fetchCarts();
   }, [dispatch]);
 
-  const logout = async () => {
-    const saveUserCart = async () => {
-      // Required for the confirmation dialog in some browsers
-      const data = await CartApi.saveCart(items);
+  const logout = () => {
+    const saveUserCart = () => {
+      dispatch(setAuth());
       localStorage.removeItem("token");
       localStorage.removeItem("isLogged");
       localStorage.removeItem("cart");
     };
 
-    await saveUserCart();
+    saveUserCart();
 
     navigate("/");
   };
