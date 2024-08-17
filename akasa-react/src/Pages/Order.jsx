@@ -84,7 +84,7 @@ const Order = () => {
             <SubFooter
               button={"All Menu"}
               desc={"Checkout our dellicious menu ??"}
-              to={"/menu"}
+              to={"/auth/menu"}
             />
           </div>
         </>

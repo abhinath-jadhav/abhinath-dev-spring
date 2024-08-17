@@ -69,7 +69,7 @@ const Home = () => {
       <SubFooter
         desc={"Check out our all menu !!"}
         button={"Explore now"}
-        to={"/menu"}
+        to={"/auth/menu"}
       />
     </div>
   );

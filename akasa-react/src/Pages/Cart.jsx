@@ -182,7 +182,7 @@ const Cart = () => {
           <SubFooter
             desc={"Add few more items from our delicious menu !!"}
             button={"Explore now"}
-            to={"/menu"}
+            to={"/auth/menu"}
           />
         </div>
       ) : (

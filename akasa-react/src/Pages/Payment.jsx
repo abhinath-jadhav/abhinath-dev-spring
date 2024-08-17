@@ -28,7 +28,7 @@ const Payment = () => {
       <SubFooter
         button={"All Menu"}
         desc={"Want to try another dishes ??"}
-        to={"/menu"}
+        to={"/auth/menu"}
       />
     </>
   );
