@@ -6,7 +6,7 @@ const HeroCard = ({ img, title }) => {
   const handleClick = () => {};
 
   return (
-    <Link to={"/menu"}>
+    <Link to={"/auth/menu"}>
       <div
         // onClick={handleClick}
         className="flex flex-col justify-between items-center bg-primery w-24 md:gap-2 md:w-48 px-2 py-2 md:px-4 md:py-4 rounded-md"
