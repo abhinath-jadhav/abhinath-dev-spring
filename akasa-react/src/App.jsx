@@ -4,6 +4,7 @@ import { Cart, Home, Layout, Login, Menu, NotFound, Register } from "./Pages";
 import Payment from "./Pages/Payment";
 import Order from "./Pages/Order";
 import Auth from "./Pages/Auth";
+import { EmptyCart } from "./Components";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
               <Route path="cart" element={<Cart />} />
               <Route path="payment" element={<Payment />} />
               <Route path="orders" element={<Order />} />
+              <Route path="emptycart" element={<EmptyCart />} />
             </Route>
           </Route>
           {/* 404 Route */}

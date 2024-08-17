@@ -9,6 +9,7 @@ import {
 import Swal from "sweetalert2";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { CartApi } from "../utils/index.js";
+import { list } from "postcss";
 
 const FoodMenuCard = ({
   id,
@@ -48,7 +49,31 @@ const FoodMenuCard = ({
         return;
       } else {
         dispatch(addItem(id));
-        CartApi.saveCart(items);
+
+        const item = items.find((i) => i.item == id);
+        //console.log(item);
+
+        if (item) {
+          const reduced = items.map((i) => {
+            if (i.item == id) {
+              return {
+                item: i.item,
+                quantity: i.quantity + 1,
+              };
+            }
+            return i;
+          });
+          CartApi.saveCart(reduced);
+        } else {
+          const list = [
+            ...items,
+            {
+              item: id,
+              quantity: 1,
+            },
+          ];
+          CartApi.saveCart(list);
+        }
       }
 
       setShowAddToCart(false);
@@ -58,11 +83,21 @@ const FoodMenuCard = ({
   const handleReduce = () => {
     if (value.quantity == 1) {
       dispatch(removeItem(id));
-      CartApi.saveCart(items);
+      const list = items.filter((i) => i.item != id);
+      CartApi.saveCart(list);
       setShowAddToCart(true);
     } else {
       dispatch(reduceQuantity(id));
-      CartApi.saveCart(items);
+      const reduced = items.map((i) => {
+        if (i.item == id) {
+          return {
+            item: i.item,
+            quantity: i.quantity - 1,
+          };
+        }
+        return i;
+      });
+      CartApi.saveCart(reduced);
     }
   };
   useEffect(() => {
