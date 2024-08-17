@@ -9,17 +9,20 @@ import {
 } from "../../Store/Feature/CartSlice.js";
 import Swal from "sweetalert2";
 import { CartApi } from "../../utils/index.js";
+import { addCartDetails } from "../../Store/Feature/Cartdetails.js";
+import EmptyCart from "../Cards/EmptyCart.jsx";
+import { useNavigate } from "react-router-dom";
 
 const ChangeQuantity = ({ id, qty, inventory, price }) => {
   const dispatch = useDispatch();
 
   const items = useSelector((state) => state.cartItems);
+  const nav = useNavigate();
 
-  const value = items.find((i) => i.item == id);
-
-  const handleReduce = () => {
-    if (value.quantity > 1) {
+  const handleReduce = async () => {
+    if (qty > 1) {
       dispatch(reduceQuantity(id));
+
       const reduced = items.map((i) => {
         if (i.item == id) {
           return {
@@ -29,8 +32,9 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
         }
         return i;
       });
-      CartApi.saveCart(reduced);
-      //dispatch(removeItem(id));
+      const res = await CartApi.saveCart(reduced);
+
+      dispatch(addCartDetails(res.items));
     } else {
       Swal.fire({
         title: "Item Removed",
@@ -39,17 +43,23 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
         confirmButtonText: "OK",
       });
       const filered = items.filter((i) => i.item != id);
-      //console.log(filered);
-      //console.log(id);
+
       dispatch(addAll(filered));
-      CartApi.saveCart(filered);
+
+      const res = await CartApi.saveCart(filered);
+      if (res.status == 500) {
+        dispatch(addCartDetails([]));
+        nav("/auth/emptycart");
+      } else {
+        dispatch(addCartDetails(res.items));
+      }
     }
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     //console.log(inventory);
     if (inventory != null && inventory.stock > 0) {
-      if (value?.quantity > 4) {
+      if (qty > 4) {
         Swal.fire({
           title: "Limit reached",
           text: "Cannot add more then 5 quantity",
@@ -68,13 +78,16 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
           }
           return i;
         });
-        CartApi.saveCart(added);
+        const res = await CartApi.saveCart(added);
+        console.log(res);
+
+        dispatch(addCartDetails(res.items));
       }
       //setShowAddToCart(false);
     }
   };
   return (
-    <div className="flex items-center gap-3">
+    <div className={"flex items-center gap-3"}>
       <div
         className="h-[32px] w-[80px] border-2 flex justify-between items-center text-primery 
                  font-medium text-sm text-center px-1
@@ -92,7 +105,7 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
         </div>
       </div>
       <p className="w-[70px] text-end">
-        {"₹ "} {price * qty}
+        {"₹ "} {qty}
       </p>
     </div>
   );

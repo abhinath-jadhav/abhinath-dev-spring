@@ -85,19 +85,14 @@ public class UserService {
             if(userCart != null){
                 userCart.setItems(items);
                 cartRepository.save(userCart);
-                return SuccessResponse.builder()
-                        .status("200")
-                        .message("Success")
-                        .build();
+                return foodItemService.selectedItems(items);
+
             } else {
                 UserCart cart = new UserCart();
                 cart.setUserId(user);
                 cart.setItems(items);
                 cartRepository.save(cart);
-                return SuccessResponse.builder()
-                        .status("200")
-                        .message("Success")
-                        .build();
+                return foodItemService.selectedItems(items);
             }
 
         }

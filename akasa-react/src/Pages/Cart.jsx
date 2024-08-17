@@ -13,20 +13,21 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { pushInventory } from "../Store/Feature/inventorySlice";
 import { addAll } from "../Store/Feature/CartSlice";
+import { addCartDetails } from "../Store/Feature/Cartdetails";
 
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cartList, setCartList] = useState([]);
-
-  const items = useSelector((state) => state.cartItems);
-  const inventoryMap = useSelector((state) => state.ineventory);
   const [toPay, setToPay] = useState(0);
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const items = useSelector((state) => state.cartItems);
+
+  const inventoryMap = useSelector((state) => state.ineventory);
+
   useEffect(() => {
-    //console.log(cartList);
     try {
       const map = {};
       cartList?.forEach((o) => {
@@ -42,12 +43,19 @@ const Cart = () => {
     }
   });
 
-  const fetchData = async () => {
+  useEffect(() => {
     const fetchCartDetails = async () => {
       const data = await FoodApi.getCartDetails();
-
-      setCartList(data.items);
+      if (data.status == 200) {
+        dispatch(addCartDetails(data.items));
+        setCartList(data.items);
+      }
     };
+
+    fetchCartDetails();
+  }, []);
+
+  const fetchData = async () => {
     const fetchInventory = async () => {
       const data = await InventoryApi.getAllInventories();
       if (data.status == 200) {
@@ -71,9 +79,9 @@ const Cart = () => {
         setFlights(data.flights);
       }
     };
+
     await fetchFlight();
 
-    await fetchCartDetails();
     setLoading(false);
   };
 
@@ -101,11 +109,7 @@ const Cart = () => {
         confirmButtonText: "OK",
       });
     }
-
-    //console.log(res);
   };
-
-  //console.log(!cartList ? "check" : "fail");
 
   if (loading)
     return (
@@ -113,13 +117,10 @@ const Cart = () => {
         <Loading />
       </>
     );
+
   return (
     <>
-      {!cartList ? (
-        <div>
-          <EmptyCart />
-        </div>
-      ) : (
+      {cartList && cartList.length > 0 ? (
         <div className="pt-4 ">
           <Container>
             <div className="w-[80%]">
@@ -183,6 +184,10 @@ const Cart = () => {
             button={"Explore now"}
             to={"/menu"}
           />
+        </div>
+      ) : (
+        <div>
+          <EmptyCart />
         </div>
       )}
     </>
