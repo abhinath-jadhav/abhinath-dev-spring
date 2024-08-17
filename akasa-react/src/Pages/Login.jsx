@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { axiosNoAuth } from "../utils/axios";
 import { Container, SubFooter } from "../Components";
 import { validUser } from "../utils";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -27,8 +28,14 @@ const Login = () => {
         navigate("/");
         resetForm();
       } else {
-        alert(data.error);
+        Swal.fire({
+          title: "Authentication Failed",
+          text: data.error,
+          icon: "error",
+          confirmButtonText: "Retry",
+        });
       }
+      resetForm();
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Failed to submit form. Please try again.");
