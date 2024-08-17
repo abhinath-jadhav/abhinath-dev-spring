@@ -1,7 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FoodApi } from "../utils";
 import { useNavigate } from "react-router-dom";
-import { Category, Container, FoodMenuCard, SubFooter } from "../Components";
+import {
+  Category,
+  Container,
+  FoodMenuCard,
+  Loading,
+  SubFooter,
+} from "../Components";
 import Swal from "sweetalert2";
 import MenuBody from "../Components/MenuBody";
 import { useSelector } from "react-redux";
@@ -20,36 +26,42 @@ const Menu = () => {
 
   const items = useSelector((state) => state.cartItems);
   const nav = useNavigate();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await FoodApi.fetchFoodData("/food/all");
+    const fetchAllData = async () => {
+      const fetchData = async () => {
+        const data = await FoodApi.fetchFoodData("/food/all");
 
-      if (data.status == 200) {
-        const foodItems = data.items;
-        setFoodItems(foodItems);
-        setFilteredFoodItems(foodItems);
-      } else {
-        const status = data.response?.status;
-        if (status == 401) {
-          nav("/login");
+        if (data.status == 200) {
+          const foodItems = data.items;
+          setFoodItems(foodItems);
+          setFilteredFoodItems(foodItems);
+        } else {
+          const status = data.response?.status;
+          if (status == 401) {
+            nav("/login");
+          }
         }
-      }
+      };
+
+      const fetchCategories = async () => {
+        const data = await FoodApi.fetchFoodData("/food/categories");
+
+        if (data.status == 200) {
+          const cats = data.items;
+          setCategories(cats);
+          //console.log(categories);
+        }
+      };
+
+      await fetchCategories();
+
+      await fetchData();
+      setLoading(false);
     };
 
-    const fetchCategories = async () => {
-      const data = await FoodApi.fetchFoodData("/food/categories");
-
-      if (data.status == 200) {
-        const cats = data.items;
-        setCategories(cats);
-        //console.log(categories);
-      }
-    };
-
-    fetchCategories();
-
-    fetchData();
+    fetchAllData();
 
     return () => {
       const jsonString = JSON.stringify(items);
@@ -131,6 +143,13 @@ const Menu = () => {
       selectCategory(selectedCats.id, cat);
     }
   };
+
+  if (loading)
+    return (
+      <>
+        <Loading />
+      </>
+    );
 
   return (
     <div className="pt-10 pb-8">

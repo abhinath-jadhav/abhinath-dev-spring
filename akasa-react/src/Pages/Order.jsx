@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { UserApi } from "../utils";
-import { Container, SubFooter } from "../Components";
+import { Container, Loading, SubFooter } from "../Components";
 import { PiSealWarningFill } from "react-icons/pi";
 
 const Order = () => {
   const [orderlist, setOrders] = useState(null);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchOrders = async () => {
       const res = await UserApi.getAllOrders();
@@ -12,11 +13,19 @@ const Order = () => {
 
       if (res.status == 200) {
         setOrders(res.orders);
+        setLoading(false);
       }
     };
 
     fetchOrders();
   }, []);
+
+  if (loading)
+    return (
+      <>
+        <Loading />
+      </>
+    );
   return (
     <div className="py-10">
       {orderlist ? (

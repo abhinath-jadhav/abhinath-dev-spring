@@ -11,10 +11,12 @@ import FoodMenuCard from "./FoodMenuCard.jsx";
 import Footer from "./Footer.jsx";
 import HomeBody from "./HomeBody.jsx";
 import HomeSlider from "./HomeSlider.jsx";
+import Loading from "./Loading.jsx";
 import Navbar from "./Navbar.jsx";
 import SubFooter from "./SubFooter.jsx";
 
 export {
+  Loading,
   Navbar,
   Footer,
   Container,

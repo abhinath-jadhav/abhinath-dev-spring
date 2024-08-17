@@ -21,6 +21,7 @@ const HomeSlider = () => {
       if (data.status == 200) {
         const cats = data.items;
         setCategories(cats);
+        setLoading(false);
         //console.log(categories);
       }
     };

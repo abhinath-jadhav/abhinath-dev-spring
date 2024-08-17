@@ -4,20 +4,12 @@ import FlightCard from "./Cards/FlightCard";
 import TextRadioButton from "./Buttons/CustomRadioButton";
 import { Link } from "react-router-dom";
 
-const CartUserDetails = ({ handlePayment }) => {
+const CartUserDetails = ({ handlePayment, flights }) => {
   const [user, setUser] = useState("");
-  const [flights, setFlights] = useState([]);
 
   useEffect(() => {
     const user = getUser();
     setUser(user);
-    const fetchFlight = async () => {
-      const data = await UserApi.getFlightDetails();
-      if (data.status == 200) {
-        setFlights(data.flights);
-      }
-    };
-    fetchFlight();
   }, []);
   const handleClick = () => {};
   return (

@@ -17,6 +17,15 @@ export default {
         "hr-light": "0 4px 6px rgba(0, 0, 0, 0.1)", // Light shadow
         "hr-dark": "0 4px 8px rgba(0, 0, 0, 0.3)", // Darker shadow
       },
+      keyframes: {
+        typing: {
+          "0%": { width: "0" },
+          "100%": { width: "100%" },
+        },
+      },
+      animation: {
+        typing: "typing 0.75s steps(30, end) infinite",
+      },
     },
   },
   plugins: [

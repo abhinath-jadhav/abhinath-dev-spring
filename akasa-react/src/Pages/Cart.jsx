@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { CartApi, FoodApi, InventoryApi } from "../utils";
+import { CartApi, FoodApi, InventoryApi, UserApi } from "../utils";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
@@ -7,6 +7,7 @@ import {
   CartUserDetails,
   Container,
   EmptyCart,
+  Loading,
   SubFooter,
 } from "../Components";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +22,8 @@ const Cart = () => {
   const items = useSelector((state) => state.cartItems);
   const inventoryMap = useSelector((state) => state.ineventory);
   const [toPay, setToPay] = useState(0);
+  const [flights, setFlights] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     //console.log(cartList);
@@ -39,7 +42,7 @@ const Cart = () => {
     }
   });
 
-  useEffect(() => {
+  const fetchData = async () => {
     const fetchCartDetails = async () => {
       const data = await FoodApi.getSelected(items);
       setCartList(data.items);
@@ -58,10 +61,23 @@ const Cart = () => {
     };
 
     if (Object.keys(inventoryMap) == 0) {
-      fetchInventory();
+      await fetchInventory();
     }
 
-    fetchCartDetails();
+    const fetchFlight = async () => {
+      const data = await UserApi.getFlightDetails();
+      if (data.status == 200) {
+        setFlights(data.flights);
+      }
+    };
+    await fetchFlight();
+
+    await fetchCartDetails();
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [items]);
 
   const handlePayment = async () => {
@@ -90,6 +106,12 @@ const Cart = () => {
 
   //console.log(!cartList ? "check" : "fail");
 
+  if (loading)
+    return (
+      <>
+        <Loading />
+      </>
+    );
   return (
     <>
       {!cartList ? (
@@ -105,7 +127,10 @@ const Cart = () => {
 
               <div className="w-full lg:flex justify-between mt-5">
                 <div className="md:w-[55%] h-fit bg-white flex justify-center py-5">
-                  <CartUserDetails handlePayment={handlePayment} />
+                  <CartUserDetails
+                    handlePayment={handlePayment}
+                    flights={flights}
+                  />
                 </div>
                 <div className="md:hidden border w-[100%] border-black my-10 shadow-hr-dark"></div>
                 <div className="md:mt-0 md:w-[35%] h-fit pb-8 bg-white text-sm flex flex-col items-center">
