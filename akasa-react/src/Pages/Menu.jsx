@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { FoodApi } from "../utils";
+import { FoodApi, InventoryApi } from "../utils";
 import { useNavigate } from "react-router-dom";
 import {
   Category,
@@ -10,7 +10,8 @@ import {
 } from "../Components";
 import Swal from "sweetalert2";
 import MenuBody from "../Components/MenuBody";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { pushInventory } from "../Store/Feature/inventorySlice";
 
 const Menu = () => {
   const [foodItems, setFoodItems] = useState([]);
@@ -27,9 +28,24 @@ const Menu = () => {
   const items = useSelector((state) => state.cartItems);
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [inventory, setInventory] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchAllData = async () => {
+      const fetchInventory = async () => {
+        const data = await InventoryApi.getAllInventories();
+        if (data.status == 200) {
+          const inventoryMap = {};
+          data.inventories.forEach((item) => {
+            inventoryMap[item.itemId] = item;
+          });
+          //console.log(inventoryMap);
+          setInventory(inventoryMap);
+          dispatch(pushInventory(inventoryMap));
+        }
+      };
+
       const fetchData = async () => {
         const data = await FoodApi.fetchFoodData("/food/all");
 
@@ -54,6 +70,7 @@ const Menu = () => {
           //console.log(categories);
         }
       };
+      await fetchInventory();
 
       await fetchCategories();
 
@@ -219,7 +236,7 @@ const Menu = () => {
             </button>
           </div>
         </Container>
-        <MenuBody filteredFoodItems={filteredFoodItems} />
+        <MenuBody filteredFoodItems={filteredFoodItems} inventory={inventory} />
       </Container>
 
       <SubFooter
