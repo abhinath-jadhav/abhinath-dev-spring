@@ -358,9 +358,7 @@ public class DummyData {
     public static List<FoodItem> getfoods(){
         try {
             List<FoodItem> users = objectMapper.readValue(food, new TypeReference<List<FoodItem>>(){});
-            for (FoodItem user : users) {
-                System.out.println(user);
-            }
+
             return users;
         } catch (IOException e) {
             e.printStackTrace();
@@ -371,9 +369,7 @@ public class DummyData {
     public static List<Inventory> getInv(){
         try {
             List<Inventory> users = objectMapper.readValue(inventory, new TypeReference<List<Inventory>>(){});
-            for (Inventory user : users) {
-                System.out.println(user);
-            }
+
             return users;
         } catch (IOException e) {
             e.printStackTrace();
@@ -384,9 +380,6 @@ public class DummyData {
     public static  List<Category> getCats(){
         try {
             List<Category> users = objectMapper.readValue(categories, new TypeReference<List<Category>>(){});
-            for (Category user : users) {
-                System.out.println(user);
-            }
 
             return users;
         } catch (IOException e) {
