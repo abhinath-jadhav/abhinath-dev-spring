@@ -2,7 +2,7 @@ import Arrow from "../assets/arrow.svg";
 import Profile from "../assets/profile.svg";
 import Search_icon from "../assets/search.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Container from "./Container";
 import { FaCartArrowDown, FaHome } from "react-icons/fa";
@@ -27,6 +27,23 @@ const Navbar = () => {
       navigate("/search-result");
     }
   };
+
+  const dropdownRef = useRef(null);
+
+  // Function to handle clicks outside of the dropdown
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsVisible(false);
+    }
+  };
+
+  // Add and clean up event listener for clicks outside
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     setAuth(validUser());
@@ -65,7 +82,7 @@ const Navbar = () => {
     fetchCarts();
   }, [dispatch]);
 
-  const logout = () => {
+  const logout = async () => {
     const saveUserCart = async () => {
       // Required for the confirmation dialog in some browsers
       const data = await CartApi.saveCart(items);
@@ -74,9 +91,9 @@ const Navbar = () => {
       localStorage.removeItem("cart");
     };
 
-    saveUserCart();
+    await saveUserCart();
 
-    navigate("/login");
+    navigate("/");
   };
 
   return (
@@ -137,7 +154,8 @@ const Navbar = () => {
 
             {/* Profile */}
             <div
-              onClick={() => setIsVisible(!isVisible)}
+              ref={dropdownRef}
+              onClick={() => setIsVisible(isAuth ? !isVisible : false)}
               className="flex gap-3 group cursor-pointer relative hover:border-2 border-secondary p-2 rounded-md"
             >
               {isAuth ? (
