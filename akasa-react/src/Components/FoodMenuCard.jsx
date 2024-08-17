@@ -8,6 +8,7 @@ import {
 } from "../Store/Feature/CartSlice.js";
 import Swal from "sweetalert2";
 import { FaMinus, FaPlus } from "react-icons/fa";
+import { CartApi } from "../utils/index.js";
 
 const FoodMenuCard = ({
   id,
@@ -47,6 +48,7 @@ const FoodMenuCard = ({
         return;
       } else {
         dispatch(addItem(id));
+        CartApi.saveCart(items);
       }
 
       setShowAddToCart(false);
@@ -56,9 +58,11 @@ const FoodMenuCard = ({
   const handleReduce = () => {
     if (value.quantity == 1) {
       dispatch(removeItem(id));
+      CartApi.saveCart(items);
       setShowAddToCart(true);
     } else {
       dispatch(reduceQuantity(id));
+      CartApi.saveCart(items);
     }
   };
   useEffect(() => {

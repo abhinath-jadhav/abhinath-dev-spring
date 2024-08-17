@@ -37,7 +37,6 @@ const Navbar = () => {
     }
   };
 
-  // Add and clean up event listener for clicks outside
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
@@ -47,35 +46,13 @@ const Navbar = () => {
 
   useEffect(() => {
     setAuth(validUser());
-
-    const saveUserCart = (event) => {
-      event.preventDefault();
-      event.returnValue = "";
-      console.log(items); // Required for the confirmation dialog in some browsers
-      CartApi.saveCart(items);
-    };
-
-    window.addEventListener("beforeunload", saveUserCart);
-
-    return () => {
-      window.removeEventListener("beforeunload", saveUserCart);
-    };
-  });
+  }, []);
 
   useEffect(() => {
     const fetchCarts = async () => {
       const data = await CartApi.getAllCarts();
       if (data != null && data.status == 200) {
         dispatch(addAll(data.list));
-      } else {
-        const items = localStorage.getItem("cart");
-        if (items) {
-          const parsed = JSON.parse(items);
-          Array.isArray(parsed) &&
-            parsed.length > 0 &&
-            dispatch(addAll(parsed));
-          console.log(parsed);
-        }
       }
     };
 
