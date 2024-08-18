@@ -14,6 +14,8 @@ const Order = () => {
       if (res.status == 200) {
         setOrders(res.orders);
         setLoading(false);
+      } else {
+        setLoading(false);
       }
     };
 
