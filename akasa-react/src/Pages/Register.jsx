@@ -6,11 +6,15 @@ import { SignupSchema } from "../ValidationScema/SignupSchema";
 import { axiosNoAuth } from "../utils/axios";
 import { validUser } from "../utils";
 import { Container, SubFooter } from "../Components";
+import { useDispatch, useSelector } from "react-redux";
+import { setAuth } from "../Store/Feature/authSlice";
 
 const Register = () => {
   const navigate = useNavigate();
+  const auth = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (validUser()) {
+    if (auth) {
       navigate("/");
     }
   });
@@ -18,12 +22,13 @@ const Register = () => {
     try {
       const response = await axiosNoAuth.post("/auth/register", values);
 
-      console.log("Response:", response.data);
+      //console.log("Response:", response.data);
       const data = response.data;
 
       if (data.status == 200) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("session", data.user);
+        dispatch(setAuth());
         navigate("/");
         resetForm();
       } else {

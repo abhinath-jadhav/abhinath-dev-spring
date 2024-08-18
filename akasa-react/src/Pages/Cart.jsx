@@ -100,7 +100,7 @@ const Cart = () => {
     if (res.status == 200) {
       dispatch(addAll([]));
       localStorage.removeItem("cart");
-      navigate("/payment", { state: { res } });
+      navigate("/auth/payment", { state: { res } });
     } else {
       Swal.fire({
         title: "Error",
