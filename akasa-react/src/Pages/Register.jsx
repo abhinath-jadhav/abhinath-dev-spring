@@ -28,7 +28,7 @@ const Register = () => {
       if (data.status == 200) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("session", data.user);
-        dispatch(setAuth());
+        dispatch(setAuth(true));
         navigate("/");
         resetForm();
       } else {

@@ -46,7 +46,25 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const handleLogin = (event) => {
+      console.log("test");
+
+      if (event.key === "token") {
+        if (event.newValue) {
+          dispatch(setAuth(true));
+          navigate("/");
+        } else {
+          dispatch(setAuth(false));
+          navigate("/login");
+        }
+      }
+    };
+    window.addEventListener("storage", handleLogin);
+    return () => {
+      window.removeEventListener("storage", handleLogin);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchCarts = async () => {
@@ -70,7 +88,7 @@ const Navbar = () => {
 
   const logout = () => {
     const saveUserCart = () => {
-      dispatch(setAuth());
+      dispatch(setAuth(false));
       localStorage.removeItem("token");
       localStorage.removeItem("isLogged");
       localStorage.removeItem("cart");

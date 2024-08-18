@@ -19,6 +19,10 @@ const Login = () => {
     if (auth) {
       navigate("/");
     }
+    if (validUser()) {
+      dispatch(setAuth(true));
+      navigate("/");
+    }
   });
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
@@ -29,7 +33,7 @@ const Login = () => {
       if (data.status == 200) {
         localStorage.setItem("token", data.token);
         localStorage.setItem("session", data.user);
-        dispatch(setAuth());
+        dispatch(setAuth(true));
         navigate("/");
         resetForm();
       } else {
