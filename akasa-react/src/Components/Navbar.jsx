@@ -48,8 +48,6 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleLogin = (event) => {
-      console.log("test");
-
       if (event.key === "token") {
         if (event.newValue) {
           dispatch(setAuth(true));
