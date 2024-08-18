@@ -229,7 +229,7 @@ public class DummyData {
             "  {\n" +
             "    \"name\": \"Chicken Burger\",\n" +
             "    \"price\": 100,\n" +
-            "    \"diet\": 1,\n" +
+            "    \"diet\": 2,\n" +
             "    \"category\": 4,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/fralafdv3iw3pvtf4ocv\",\n" +
@@ -340,7 +340,7 @@ public class DummyData {
             "    \"name\": \"Bread Patties\",\n" +
             "    \"price\": 100,\n" +
             "    \"diet\": 1,\n" +
-            "    \"category\": 61,\n" +
+            "    \"category\": 6,\n" +
             "    \"description\": \"Spicy paneer, candied mango and charred bell pepper sandwich served on white and brown bread\",\n" +
             "    \"img\": \"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/ensqvz8kk2dkdhacnmdi\",\n" +
             "    \"ratings\": 3,\n" +
