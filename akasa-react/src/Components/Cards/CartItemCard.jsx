@@ -14,7 +14,10 @@ const CartItemCard = ({ price, qty, name, diet, id, inventory }) => {
   return (
     <>
       <div className={"flex items-center gap-2"}>
-        <GrSquare className={diet == 1 ? "text-green-600" : "text-red-600"} />
+        <GrSquare
+          className={diet == 1 ? "text-green-600" : "text-red-600"}
+          size={12}
+        />
         <p>{value.name}</p>
       </div>
 

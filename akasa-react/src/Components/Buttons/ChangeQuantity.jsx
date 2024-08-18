@@ -104,8 +104,8 @@ const ChangeQuantity = ({ id, qty, inventory, price }) => {
           <FaPlus className="text-green-600 pr-1" size={15} />
         </div>
       </div>
-      <p className="w-[70px] text-end">
-        {"₹ "} {qty}
+      <p className="w-[50px] text-end">
+        {"₹ "} {price * qty}
       </p>
     </div>
   );
