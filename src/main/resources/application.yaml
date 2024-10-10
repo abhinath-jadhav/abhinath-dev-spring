@@ -1,4 +1,11 @@
 server:
+  ssl:
+    enabled: true
+    key-store: classpath:abhinathdev.p12   # Path to your .p12 file
+    key-store-password: Rangrover          # Password for the .p12 file
+    key-store-type: PKCS12                 # Keystore type is PKCS12
+    key-alias: abbhinath-dev               # The alias of your key
+    key-password: Rangrover                # The password for the private key (optional if the same as key-store-password)
   port: 8080
 
 
