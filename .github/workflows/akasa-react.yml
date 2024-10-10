@@ -52,4 +52,6 @@ jobs:
           context: ./akasa-react
           file: ./akasa-react/Dockerfile
           push: true
-          tags: nuline/akasa-react:latest
+          tags: | 
+            nuline/akasa-react:latest
+            nuline/akasa-react:${{ github.run_number }}
