@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 
 # Application information
@@ -22,8 +22,7 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://jabhinath1995:ch*#rzPi*sh26LC@cluster0.tllxlzz.mongodb.net/?retryWrites=true&w=majority
-      database: Nuline
+      uri: mongodb+srv://jabhinath1995:5qRQLsjQEZ6wYitd@cluster0.tllxlzz.mongodb.net/Akasa?retryWrites=true&w=majority&appName=Cluster0
   application:
     name: ms-admin
   mail:
