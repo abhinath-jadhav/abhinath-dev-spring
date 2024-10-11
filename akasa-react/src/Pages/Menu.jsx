@@ -211,7 +211,7 @@ const Menu = () => {
       </Container>
 
       <SubFooter
-        to={"/auth/cart"}
+        to={"/cart"}
         desc={"Go to cart to complete your order"}
         button={"Go to Cart"}
       />

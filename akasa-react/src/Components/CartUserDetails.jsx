@@ -59,7 +59,7 @@ const CartUserDetails = ({ flights }) => {
         </div>
       ) : (
         <div className=" flex flex-col justify-center items-center gap-4 h-[200px]">
-          <p className="text-md">
+          <p className="text-md text-center">
             Please login/register to complete your order
           </p>
           <div className="flex gap-4">
