@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { CartApi, FoodApi, InventoryApi, UserApi } from "../utils";
+import { useEffect, useState } from "react";
+import { CartApi, InventoryApi, UserApi } from "../utils";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
@@ -11,103 +11,114 @@ import {
   SubFooter,
 } from "../Components";
 import { useDispatch, useSelector } from "react-redux";
-import { pushInventory } from "../Store/Feature/inventorySlice";
 import { addAll } from "../Store/Feature/CartSlice";
 import { addCartDetails } from "../Store/Feature/Cartdetails";
+import { resetToPay } from "../Store/Feature/toPay";
 
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [cartList, setCartList] = useState([]);
-  const [toPay, setToPay] = useState(0);
   const [flights, setFlights] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const items = useSelector((state) => state.cartItems);
-
-  const inventoryMap = useSelector((state) => state.ineventory);
-
-  useEffect(() => {
-    try {
-      const map = {};
-      cartList?.forEach((o) => {
-        map[o.id] = o;
-      });
-      const pay = items.reduce(
-        (sum, i) => i.quantity * map[i.item]?.price + sum,
-        0
-      );
-      setToPay(Math.round(pay));
-    } catch (err) {
-      console.log(err);
-    }
-  });
+  const auth = useSelector((state) => state.auth);
+  const toPay = useSelector((state) => state.toPay);
+  const checkoutDetails = useSelector((state) => state.checkOutDetails);
+  const [inventoryMap, setInventoryMap] = useState({});
+  const [showPayment, setShowPayment] = useState(false);
 
   useEffect(() => {
-    const fetchCartDetails = async () => {
-      const data = await FoodApi.getCartDetails();
-      if (data.status == 200) {
-        dispatch(addCartDetails(data.items));
-        setCartList(data.items);
-      }
+    const fetchData = async () => {
+      const fetchInventory = async () => {
+        const data = await InventoryApi.getAllInventories();
+        if (data.status == 200) {
+          const inventoryMap = {};
+          data.inventories.forEach((item) => {
+            inventoryMap[item.itemId] = item;
+          });
+
+          setInventoryMap(inventoryMap);
+        }
+      };
+
+      await fetchInventory();
+
+      const fetchCartDetails = async () => {
+        const data = await CartApi.getAllCarts();
+
+        if (data.status == 200) {
+          dispatch(addCartDetails(data.cart));
+
+          if (toPay == 0 || Number.isNaN(toPay)) {
+            const pay = data.cart.reduce((sum, i) => {
+              return i.qty * i.price + sum;
+            }, 0);
+            dispatch(resetToPay(pay));
+          }
+          setCartList(data.cart);
+        }
+      };
+
+      await fetchCartDetails();
     };
 
-    fetchCartDetails();
+    fetchData();
+
+    setLoading(false);
   }, []);
 
-  const fetchData = async () => {
-    const fetchInventory = async () => {
-      const data = await InventoryApi.getAllInventories();
-      if (data.status == 200) {
-        const inventoryMap = {};
-        data.inventories.forEach((item) => {
-          inventoryMap[item.itemId] = item;
-        });
-        //console.log(inventoryMap);
-        //setInventory(inventoryMap);
-        dispatch(pushInventory(inventoryMap));
-      }
-    };
-
-    if (Object.keys(inventoryMap) == 0) {
-      await fetchInventory();
-    }
-
+  useEffect(() => {
     const fetchFlight = async () => {
       const data = await UserApi.getFlightDetails();
       if (data.status == 200) {
         setFlights(data.flights);
       }
     };
-
-    await fetchFlight();
-
-    setLoading(false);
-  };
+    if (auth) fetchFlight();
+  }, [auth]);
 
   useEffect(() => {
-    fetchData();
-  }, [items]);
+    if (checkoutDetails.flight == true && checkoutDetails.mode == true) {
+      setShowPayment(true);
+    }
+  }, [checkoutDetails]);
 
   const handlePayment = async () => {
-    //console.log(cartList);
-    const data = {
-      payment: toPay,
-      items: items,
-    };
-    //console.log(data);
-    const res = await CartApi.completeOrder(data);
-    if (res.status == 200) {
-      dispatch(addAll([]));
-      localStorage.removeItem("cart");
-      navigate("/auth/payment", { state: { res } });
-    } else {
+    if (!auth) {
       Swal.fire({
-        title: "Error",
-        text: res.message,
+        title: "Authentication Required",
+        text: "Log in to proceed.",
         icon: "warning",
-        confirmButtonText: "OK",
+        confirmButtonText: "Ok",
       });
+    } else if (!showPayment) {
+      Swal.fire({
+        title: "Details Required",
+        text: "Select mode of payment and flight.",
+        icon: "warning",
+        confirmButtonText: "Ok",
+      });
+    } else {
+      //console.log(cartList);
+      const data = {
+        payment: toPay,
+        flight: checkoutDetails.flightId,
+        paymentMode: checkoutDetails.modeType,
+      };
+      //console.log(data);
+      const res = await CartApi.completeOrder(data);
+      if (res.status == 200) {
+        dispatch(addAll([]));
+        localStorage.removeItem("cart");
+        navigate("/auth/payment", { state: { res } });
+      } else {
+        Swal.fire({
+          title: "Error",
+          text: res.message,
+          icon: "warning",
+          confirmButtonText: "OK",
+        });
+      }
     }
   };
 
@@ -139,17 +150,13 @@ const Cart = () => {
                   <h3 className="text-2xl my-5">Price Breakup</h3>
                   <div className="border w-[85%] border-black"></div>
                   {/* <hr className="w-full mt-2 border-t shadow-hr-dark" /> */}
-                  <div className="mt-8 flex flex-col gap-5 items-center justify-center w-full">
+                  <div className="pt-8 flex flex-col gap-5 items-center justify-center w-full">
                     {cartList?.map((cart, i) => (
-                      <div
+                      <CartItemCard
                         key={i}
-                        className="w-[80%] flex justify-between items-center select-none"
-                      >
-                        <CartItemCard
-                          {...cart}
-                          inventory={inventoryMap[cart.id]}
-                        />
-                      </div>
+                        {...cart}
+                        inventory={inventoryMap[cart.id]}
+                      />
                     ))}
                     <div className="border w-[85%] border-black"></div>
                   </div>
@@ -164,7 +171,12 @@ const Cart = () => {
                     <div className="flex justify-center mt-10">
                       <button
                         onClick={handlePayment}
-                        className="text-3xl border p-6 bg-green-700 text-white"
+                        // disabled={!showPayment || !auth}
+                        className={`${
+                          auth && showPayment
+                            ? "text-3xl border p-6 bg-green-700 text-white"
+                            : "text-3xl border p-6 bg-gray-500 text-white"
+                        }`}
                       >
                         Complete Payment
                       </button>

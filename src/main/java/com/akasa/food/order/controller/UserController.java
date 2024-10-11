@@ -29,31 +29,6 @@ public class UserController {
 
     }
 
-    @GetMapping("/carts")
-    public ResponseEntity<Response> getCartItems(){
-        String user = MDC.get("user");
-        Response res = userService.getCartItems(user);
-
-        return ResponseEntity.ok(res);
-
-    }
-
-    @PostMapping("/carts")
-    public ResponseEntity<?> saveCart(@RequestBody Set<CartItem> list){
-        String user = MDC.get("user");
-        Response res = userService.addCarts(user, list);
-        return ResponseEntity.ok(res);
-    }
-
-    @GetMapping("/carts/details")
-    public ResponseEntity<?> getUserCartDetails(){
-            String user = MDC.get("user");
-            Response res = userService.getUserCartDetails(user);
-            return ResponseEntity.ok(res);
-    }
-
-
-
     @PostMapping("/order")
     public ResponseEntity<?> completeOrder(@RequestBody Order order){
         String user = MDC.get("user");

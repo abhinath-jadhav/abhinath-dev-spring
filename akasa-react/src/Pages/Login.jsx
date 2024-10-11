@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import logo from "../assets/akasalogo.png";
+import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { loginSchema } from "../ValidationScema/LoginScema";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosNoAuth } from "../utils/axios";
 import { Container, SubFooter } from "../Components";
-import { validUser } from "../utils";
+import { CartApi, validUser } from "../utils";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuth } from "../Store/Feature/authSlice";
@@ -14,6 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const auth = useSelector((state) => state.auth);
+  const items = useSelector((state) => state.cartItems);
   const dispatch = useDispatch();
   useEffect(() => {
     if (auth) {
@@ -34,6 +34,9 @@ const Login = () => {
         localStorage.setItem("token", data.token);
         localStorage.setItem("session", data.user);
         dispatch(setAuth(true));
+        if (items && items.langth > 0) {
+          await CartApi.saveCart(items);
+        }
         navigate("/");
         resetForm();
       } else {
@@ -47,7 +50,12 @@ const Login = () => {
       resetForm();
     } catch (error) {
       console.error("Error submitting form:", error);
-      alert("Failed to submit form. Please try again.");
+      Swal.fire({
+        title: "Authentication Failed",
+        text: error.message,
+        icon: "error",
+        confirmButtonText: "Retry",
+      });
     } finally {
       setSubmitting(false);
     }

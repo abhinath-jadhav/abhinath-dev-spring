@@ -12,7 +12,7 @@ class InventoryApi {
 
   static async getInventory(id) {
     try {
-      const response = await axiosAuth.get("/inventory/" + id);
+      const response = await axiosNoAuth.get("/inventory/" + id);
       return response.data;
     } catch (error) {
       console.log(error);

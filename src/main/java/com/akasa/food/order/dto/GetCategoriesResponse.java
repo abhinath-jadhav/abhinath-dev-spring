@@ -14,6 +14,6 @@ import java.util.List;
 public class GetCategoriesResponse extends Response{
     private String message;
     private String status;
-    private List<Category> items;
+    private List<Category> categories;
 
 }

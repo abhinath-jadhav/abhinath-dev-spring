@@ -1,6 +1,15 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { Cart, Home, Layout, Login, Menu, NotFound, Register } from "./Pages";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  Admin,
+  Cart,
+  Foods,
+  Home,
+  Layout,
+  Login,
+  Menu,
+  NotFound,
+  Register,
+} from "./Pages";
 import Payment from "./Pages/Payment";
 import Order from "./Pages/Order";
 import Auth from "./Pages/Auth";
@@ -15,13 +24,18 @@ const App = () => {
             <Route index element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/menu" element={<Menu />} />
+            <Route path="/cart" element={<Cart />} />
+
+            <Route path="/emptycart" element={<EmptyCart />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/auth" element={<Auth />}>
-              <Route path="menu" element={<Menu />} />
-              <Route path="cart" element={<Cart />} />
-              <Route path="payment" element={<Payment />} />
               <Route path="orders" element={<Order />} />
-              <Route path="emptycart" element={<EmptyCart />} />
+              <Route path="payment" element={<Payment />} />
+            </Route>
+
+            <Route path="/admin" element={<Admin />}>
+              <Route path="foods" element={<Foods />} />
             </Route>
           </Route>
           {/* 404 Route */}

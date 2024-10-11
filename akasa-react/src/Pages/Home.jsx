@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Container, HomeBody, HomeSlider, SubFooter } from "../Components";
-import { Link } from "react-router-dom";
 import { CartApi } from "../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { addAll } from "../Store/Feature/CartSlice";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import FoodItemCard from "./FoodHomeCard";
 import Container from "./Container";
@@ -10,9 +10,10 @@ const HomeBody = () => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
-      const data = await FoodApi.fetchHomeData("/food/favorites");
-      if (data.status == 200) {
-        const { items } = data;
+      const response = await FoodApi.fetchHomeData("/food/favorites");
+
+      if (response.status == 200) {
+        const { items } = response;
         setFoodItems(items);
         setLoading(false);
       }
@@ -35,7 +36,9 @@ const HomeBody = () => {
 
           <div className="md:flex md:flex-wrap justify-center mt-4">
             {foodItems.map((o) => (
-              <FoodItemCard key={o.id} {...o} />
+              <div key={o.id}>
+                <FoodItemCard {...o} />
+              </div>
             ))}
           </div>
         </div>

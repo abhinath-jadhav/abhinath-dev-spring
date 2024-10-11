@@ -9,16 +9,15 @@ import { FaCartArrowDown, FaHome } from "react-icons/fa";
 import { MdFastfood } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import logo from "../assets/logo1.png";
-import { CartApi, validUser } from "../utils";
+import { CartApi } from "../utils";
 import { addAll } from "../Store/Feature/CartSlice";
 import { setAuth } from "../Store/Feature/authSlice";
+import { v4 as uuidv4 } from "uuid";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(false);
 
-  const [cartItems, setCartItems] = useState([]);
-  const items = useSelector((state) => state.cartItems);
   const isAuth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -40,6 +39,18 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      let sessionID = localStorage.getItem("session-id");
+      if (!sessionID) {
+        sessionID = uuidv4();
+        localStorage.setItem("session-id", sessionID);
+      }
+    } else {
+      dispatch(setAuth(true));
+    }
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -130,7 +141,7 @@ const Navbar = () => {
                 <h3 className="hidden md:block">Home</h3>
               </div>
             </Link>
-            <Link to={"/auth/menu"}>
+            <Link to={"/menu"}>
               <div className="flex items-center justify-center font-semibold gap-2 text-secondary">
                 <MdFastfood size={30} />
                 <h3 className="hidden md:block">Menu</h3>
@@ -138,15 +149,12 @@ const Navbar = () => {
             </Link>
 
             {/* Cart */}
-            <Link
-              to={"/auth/cart"}
-              className="flex gap-2 relative text-secondary"
-            >
-              {cartItems.length !== 0 && (
+            <Link to={"/cart"} className="flex gap-2 relative text-secondary">
+              {/* {cartItems.length !== 0 && (
                 <div className="absolute flex justify-center items-center text-xs top-[-0.3rem] left-2 bg-orange-600  h-[16px] w-[16px] rounded-full">
                   <p>{cartItems[0].quantity}</p>
                 </div>
-              )}
+              )} */}
               <div className="flex items-center justify-center gap-2 font-semibold text-lg">
                 <FaCartArrowDown size={30} />
                 <h3 className="hidden md:block">Cart</h3>

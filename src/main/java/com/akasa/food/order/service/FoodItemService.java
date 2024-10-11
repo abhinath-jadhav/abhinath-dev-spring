@@ -95,17 +95,14 @@ public class FoodItemService {
         return GetCategoriesResponse.builder()
                 .status("200")
                 .message("Success")
-                .items(categoryList)
+                .categories(categoryList)
                 .build();
     }
 
-    public Response selectedItems(Set<CartItem> list) {
+    public Response selectedItems(List<CartItem> list) {
         log.info("Request received for get selected food items by :: {}", MDC.get("user"));
 
         Map<Long, CartItem> map = list.stream().collect(Collectors.toMap(CartItem::getItem, Function.identity()));
-
-
-
 
         List<FoodItem> foodItems = foodItemRepo.findAllById(map.keySet());
 
@@ -126,7 +123,7 @@ public class FoodItemService {
         return GetCartDetailsResponse.builder()
                 .status("200")
                 .message("Success")
-                .items(collect)
+                .cart(collect)
                 .build();
     }
 }

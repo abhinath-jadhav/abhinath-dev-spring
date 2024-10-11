@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import StarRating from "./StarRating";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addItem,
-  reduceQuantity,
-  removeItem,
-} from "../Store/Feature/CartSlice.js";
+import { useDispatch } from "react-redux";
+import { removeItem } from "../Store/Feature/CartSlice.js";
 import Swal from "sweetalert2";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { CartApi } from "../utils/index.js";
-import { list } from "postcss";
 
 const FoodMenuCard = ({
   id,
@@ -19,99 +15,74 @@ const FoodMenuCard = ({
   price,
   index,
   ratings,
-  inventory,
+  stock,
+  qty,
 }) => {
   const dispatch = useDispatch();
   const [showAddToCart, setShowAddToCart] = useState(true);
   const [disable, setDisable] = useState(false);
+  const [quantity, setQuantity] = useState(0);
 
-  const items = useSelector((state) => state.cartItems);
-
-  const value = Array.isArray(items) ? items.find((i) => i.item == id) : null;
-  //console.log(inventory);
-  const handleAdd = () => {
-    if (inventory != null && inventory.stock > 0) {
-      if (value?.quantity > 4) {
-        Swal.fire({
-          title: "Limit reached",
-          text: "Cannot add more then 5 quantity",
-          icon: "warning",
-          confirmButtonText: "OK",
-        });
-        return;
-      } else if (inventory.stock <= value?.quantity) {
+  const handleAdd = async () => {
+    if (quantity > 4) {
+      Swal.fire({
+        title: "Limit reached",
+        text: "Cannot add more then 5 quantity",
+        icon: "warning",
+        confirmButtonText: "OK",
+      });
+      return;
+    } else {
+      const res = await CartApi.addToCart(id);
+      if (res.status == 400) {
         Swal.fire({
           title: "Out of stock",
-          text: `Only ${inventory.stock} quantity available`,
+          text: `Only ${quantity} quantity available`,
           icon: "warning",
           confirmButtonText: "OK",
         });
-        return;
-      } else {
-        dispatch(addItem(id));
-
-        const item = items.find((i) => i.item == id);
-        //console.log(item);
-
-        if (item) {
-          const reduced = items.map((i) => {
-            if (i.item == id) {
-              return {
-                item: i.item,
-                quantity: i.quantity + 1,
-              };
-            }
-            return i;
-          });
-          CartApi.saveCart(reduced);
-        } else {
-          const list = [
-            ...items,
-            {
-              item: id,
-              quantity: 1,
-            },
-          ];
-          CartApi.saveCart(list);
-        }
-      }
-
-      setShowAddToCart(false);
-    }
-  };
-
-  const handleReduce = () => {
-    if (value.quantity == 1) {
-      dispatch(removeItem(id));
-      const list = items.filter((i) => i.item != id);
-      CartApi.saveCart(list);
-      setShowAddToCart(true);
-    } else {
-      dispatch(reduceQuantity(id));
-      const reduced = items.map((i) => {
-        if (i.item == id) {
-          return {
-            item: i.item,
-            quantity: i.quantity - 1,
-          };
-        }
-        return i;
-      });
-      CartApi.saveCart(reduced);
-    }
-  };
-  useEffect(() => {
-    const fetchInventory = () => {
-      if (!inventory?.stock > 0) {
         setDisable(true);
-      }
-    };
-    fetchInventory();
+      } else if (res.status == 200) {
+        setQuantity(res.quantity);
 
-    if (value) {
+        if (quantity >= 1) {
+          setShowAddToCart(false);
+        } else {
+          setShowAddToCart(true);
+        }
+      }
+    }
+  };
+
+  const handleReduce = async () => {
+    const res = await CartApi.reduceFromCart(id);
+    if (res.status == 200) {
+      setQuantity(res.quantity);
+      if (res.quantity == 0) {
+        setQuantity(0);
+        setShowAddToCart(true);
+      }
+    }
+
+    if (quantity == 1) {
+      dispatch(removeItem(id));
+      setShowAddToCart(true);
+      setQuantity(0);
+    }
+  };
+
+  useEffect(() => {
+    if (qty > 0) {
+      setQuantity(qty);
       setShowAddToCart(false);
     }
-  });
+    if (stock == 0) {
+      setDisable(true);
+    }
+    if (quantity > 0) {
+      setShowAddToCart(false);
+    }
+  }, [quantity, id, stock, qty]);
 
   const isEvenRow = Math.floor(index / 2) % 2 === 0;
   const isEvenColumn = index % 2 === 0;
@@ -164,9 +135,7 @@ const FoodMenuCard = ({
                 </div>
 
                 <div className="max-w-[40px] flex justify-center items-center rounded-l-lg focus:ring-4 focus:outline-none focus:ring-blue-300">
-                  <p className="px-5 py-3 text-lg text-black">
-                    {value?.quantity}
-                  </p>
+                  <p className="px-5 py-3 text-lg text-black">{quantity}</p>
                 </div>
                 <div
                   onClick={handleAdd}

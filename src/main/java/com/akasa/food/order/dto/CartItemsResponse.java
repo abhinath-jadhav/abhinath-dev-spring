@@ -11,6 +11,6 @@ import java.util.Set;
 @Builder
 public class CartItemsResponse extends Response{
     private String status;
-    private Set<CartItem> list;
+    private List<CartItem> list;
     private int count;
 }

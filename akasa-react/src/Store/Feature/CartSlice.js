@@ -24,7 +24,7 @@ const itemsSlice = createSlice({
     },
     reduceQuantity: (state, action) => {
       const item = action.payload;
-      //console.log(item);
+
       const existingItem = state.find((i) => i.item === item);
       if (existingItem) {
         existingItem.quantity--;
@@ -34,10 +34,19 @@ const itemsSlice = createSlice({
       //console.log(action.payload);
       return action.payload;
     },
+    setQauntity: (state, action) => {
+      const { item, qty } = action.payload;
+      const existingItem = state.find((i) => i.item === item);
+      if (existingItem) {
+        existingItem.quantity = qty;
+      } else {
+        state.push({ item, quantity: qty });
+      }
+    },
   },
 });
 
-export const { addItem, removeItem, reduceQuantity, addAll } =
+export const { addItem, removeItem, reduceQuantity, addAll, setQauntity } =
   itemsSlice.actions;
 
 export default itemsSlice.reducer;

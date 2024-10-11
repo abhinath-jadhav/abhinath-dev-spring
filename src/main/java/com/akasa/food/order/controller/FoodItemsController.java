@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class FoodItemsController {
                     @ApiResponse(responseCode = "200", description = "Successful response", content = @Content(schema = @Schema(implementation = String.class)))
             },
             security = @SecurityRequirement(name = "bearer-key"))
-    @GetMapping("/all")
+    @GetMapping("/details")
     public ResponseEntity<Response> getAllFoodItems(){
         Response response = foodItemService.getAllItems();
 
@@ -36,7 +37,7 @@ public class FoodItemsController {
     }
 
     @PostMapping("/ids")
-    public ResponseEntity<Response> getAllFoodItems(@RequestBody Set<CartItem> list){
+    public ResponseEntity<Response> getAllFoodItems(@RequestBody List<CartItem> list){
         Response response = foodItemService.selectedItems(list);
         return ResponseEntity.ok(response);
     }

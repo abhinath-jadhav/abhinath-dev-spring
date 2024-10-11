@@ -1,17 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { FoodApi, InventoryApi } from "../utils";
+import { useEffect, useState } from "react";
+import { FoodApi } from "../utils";
 import { useNavigate } from "react-router-dom";
-import {
-  Category,
-  Container,
-  FoodMenuCard,
-  Loading,
-  SubFooter,
-} from "../Components";
-import Swal from "sweetalert2";
+import { Category, Container, Loading, SubFooter } from "../Components";
 import MenuBody from "../Components/MenuBody";
-import { useDispatch, useSelector } from "react-redux";
-import { pushInventory } from "../Store/Feature/inventorySlice";
+import { useSelector } from "react-redux";
 
 const Menu = () => {
   const [foodItems, setFoodItems] = useState([]);
@@ -28,33 +20,18 @@ const Menu = () => {
   const items = useSelector((state) => state.cartItems);
   const nav = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [inventory, setInventory] = useState({});
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchAllData = async () => {
-      const fetchInventory = async () => {
-        const data = await InventoryApi.getAllInventories();
-        if (data.status == 200) {
-          const inventoryMap = {};
-          data.inventories.forEach((item) => {
-            inventoryMap[item.itemId] = item;
-          });
-          //console.log(inventoryMap);
-          setInventory(inventoryMap);
-          dispatch(pushInventory(inventoryMap));
-        }
-      };
-
+    const fetchAllData = () => {
       const fetchData = async () => {
-        const data = await FoodApi.fetchFoodData("/food/all");
+        const response = await FoodApi.fetchFoodData("/food/details");
 
-        if (data.status == 200) {
-          const foodItems = data.items;
+        if (response.status == 200) {
+          const foodItems = response.items;
           setFoodItems(foodItems);
           setFilteredFoodItems(foodItems);
         } else {
-          const status = data.response?.status;
+          const status = response?.status;
           if (status == 401) {
             nav("/login");
           }
@@ -62,19 +39,17 @@ const Menu = () => {
       };
 
       const fetchCategories = async () => {
-        const data = await FoodApi.fetchFoodData("/food/categories");
+        const response = await FoodApi.fetchFoodData("/food/categories");
 
-        if (data.status == 200) {
-          const cats = data.items;
+        if (response.status == 200) {
+          const cats = response.categories;
           setCategories(cats);
-          //console.log(categories);
         }
       };
-      await fetchInventory();
 
-      await fetchCategories();
+      fetchCategories();
 
-      await fetchData();
+      fetchData();
       setLoading(false);
     };
 
@@ -82,10 +57,6 @@ const Menu = () => {
 
     return () => {
       const jsonString = JSON.stringify(items);
-      const encodedString = encodeURIComponent(jsonString);
-      // document.cookie = `myObject=${encodedString}; max-age=${
-      //   7 * 24 * 60 * 60
-      // }; path=/`;
 
       localStorage.setItem("cart", jsonString);
     };
@@ -236,7 +207,7 @@ const Menu = () => {
             </button>
           </div>
         </Container>
-        <MenuBody filteredFoodItems={filteredFoodItems} inventory={inventory} />
+        <MenuBody filteredFoodItems={filteredFoodItems} />
       </Container>
 
       <SubFooter

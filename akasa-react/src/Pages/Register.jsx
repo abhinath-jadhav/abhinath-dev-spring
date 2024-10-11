@@ -1,11 +1,10 @@
-import React, { useEffect } from "react";
-import logo from "../assets/akasalogo.png";
+import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import { SignupSchema } from "../ValidationScema/SignupSchema";
 import { axiosNoAuth } from "../utils/axios";
-import { validUser } from "../utils";
-import { Container, SubFooter } from "../Components";
+
+import { SubFooter } from "../Components";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuth } from "../Store/Feature/authSlice";
 

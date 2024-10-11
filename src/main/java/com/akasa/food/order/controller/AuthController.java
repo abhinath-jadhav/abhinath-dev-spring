@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
@@ -26,8 +28,9 @@ public class AuthController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<?> signIn(@RequestBody AuthRequest authRequest){
-        return authService.authenticate(authRequest);
+    public ResponseEntity<?> signIn(@RequestBody AuthRequest authRequest, HttpServletRequest request){
+        String sessionId = request.getHeader("session-id");
+        return authService.authenticate(authRequest, sessionId);
     }
 
     @PostMapping("/authenticate")
@@ -36,8 +39,8 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> signup(@RequestBody RegisterRequest user){
-        return authService.signup(user);
+    public ResponseEntity<?> signup(@RequestBody RegisterRequest user, HttpServletRequest request){
+        return authService.signup(user, request.getHeader("session-id"));
     }
 
     @GetMapping("/sign-in/user/{id}")

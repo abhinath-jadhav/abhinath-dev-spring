@@ -18,27 +18,27 @@ public class DummyData {
     public static String categories = "    [\n" +
             "        {\n" +
             "            \"name\": \"Pizza\",\n" +
-            "            \"desc\": \"Select from Pizzas\"\n" +
+            "            \"description\": \"Select from Pizzas\"\n" +
             "        },\n" +
             "        {\n" +
             "            \"name\": \"Sandwich\",\n" +
-            "            \"desc\": \"Select from Sandwiches\"\n" +
+            "            \"description\": \"Select from Sandwiches\"\n" +
             "        },\n" +
             "        {\n" +
             "            \"name\": \"Fruits\",\n" +
-            "            \"desc\": \"Select from Fruits\"\n" +
+            "            \"description\": \"Select from Fruits\"\n" +
             "        },\n" +
             "        {\n" +
             "            \"name\": \"Burger\",\n" +
-            "            \"desc\": \"Select from Burgers\"\n" +
+            "            \"description\": \"Select from Burgers\"\n" +
             "        },\n" +
             "        {\n" +
             "            \"name\": \"Rice\",\n" +
-            "            \"desc\": \"Select from Rice\"\n" +
+            "            \"description\": \"Select from Rice\"\n" +
             "        },\n" +
             "        {\n" +
             "            \"name\": \"Fast food\",\n" +
-            "            \"desc\": \"Select from Fast foods\"\n" +
+            "            \"description\": \"Select from Fast foods\"\n" +
             "        }\n" +
             "    ]";
 

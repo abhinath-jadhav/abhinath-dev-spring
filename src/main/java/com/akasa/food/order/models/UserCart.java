@@ -2,20 +2,21 @@ package com.akasa.food.order.models;
 
 import lombok.Data;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.*;
 
 @Data
-@Document
-@ToString
+@Entity
+@ToString(exclude = "items")
 public class UserCart {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String userId;
 
-    private Set<CartItem> items = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userCart")
+    private List<CartItem> items = new LinkedList<>();
 }

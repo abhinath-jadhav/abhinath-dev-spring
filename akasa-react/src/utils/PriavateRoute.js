@@ -15,6 +15,8 @@ const validUser = () => {
 
     return true;
   } catch (error) {
+    console.log(error);
+
     return false;
   }
 };
@@ -28,6 +30,13 @@ const getUser = () => {
   }
 };
 
-export { getUser };
+const isAdmin = () => {
+  const token = localStorage.getItem("token");
+  const decoded = jwtDecode(token);
+  console.log(decoded);
+  return true;
+};
+
+export { getUser, isAdmin };
 
 export default validUser;

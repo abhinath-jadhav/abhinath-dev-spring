@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateCheckOutDetails } from "../../Store/Feature/checkOutSlice";
 
 function TextRadioButton() {
   const [selectedValue, setSelectedValue] = useState("");
 
+  const dispatch = useDispatch();
+
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
+
+    dispatch(
+      updateCheckOutDetails({ type: "MODE", modeType: event.target.value })
+    );
   };
 
   return (
@@ -12,27 +20,23 @@ function TextRadioButton() {
       <ul className="grid w-full gap-6 md:grid-cols-2">
         <li
           className={`${
-            selectedValue === "hosting-small"
-              ? "bg-blue-100 border-blue-500"
-              : "bg-white"
-          } rounded-lg p-2`}
+            selectedValue === "UPI" ? "bg-blue-100 border-blue-500" : "bg-white"
+          } rounded-lg p-1`}
         >
           <div>
             <input
               type="radio"
-              id="hosting-small"
+              id="UPI"
               name="pay"
-              value="hosting-small"
+              value="UPI"
               className="hidden"
-              checked={selectedValue === "hosting-small"}
+              checked={selectedValue === "UPI"}
               onChange={handleChange}
             />
             <label
-              htmlFor="hosting-small"
+              htmlFor="UPI"
               className={`inline-flex items-center justify-between w-full px-5 py-3 text-slate-50 cursor-pointer ${
-                selectedValue === "hosting-small"
-                  ? "bg-primery"
-                  : "bg-secondary"
+                selectedValue === "UPI" ? "bg-primery" : "bg-secondary"
               }`}
             >
               <div className="block text-center w-full">
@@ -46,7 +50,7 @@ function TextRadioButton() {
             selectedValue === "online"
               ? "bg-blue-100 border-blue-500"
               : "bg-white"
-          } rounded-lg p-2`}
+          } rounded-lg p-1`}
         >
           <div>
             <input
@@ -72,10 +76,8 @@ function TextRadioButton() {
         </li>
         <li
           className={`${
-            selectedValue === "debit-card"
-              ? "bg-blue-100 border-blue-500"
-              : "bg-white"
-          } rounded-lg p-2`}
+            selectedValue === "debit-card" ? "bg-blue-100 " : "bg-white"
+          } rounded-lg p-1`}
         >
           <div>
             <input
@@ -104,7 +106,7 @@ function TextRadioButton() {
             selectedValue === "credit-card"
               ? "bg-blue-100 border-blue-500"
               : "bg-white"
-          } rounded-lg p-2`}
+          } rounded-lg p-1`}
         >
           <div>
             <input

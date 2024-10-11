@@ -12,5 +12,5 @@ import java.util.List;
 public class GetCartDetailsResponse extends Response{
     private String status;
     private String message;
-    private List<CartDetailsResponse> items;
+    private List<CartDetailsResponse> cart;
 }

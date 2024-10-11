@@ -1,9 +1,8 @@
-import React from "react";
-import fastfood from "../assets/fastfood.jpg";
+/* eslint-disable react/prop-types */
 import StarRating from "./StarRating";
 import { Link } from "react-router-dom";
 
-const FoodHomeCard = ({ id, name, description, img, price, diet, ratings }) => {
+const FoodHomeCard = ({ name, description, img, price, ratings }) => {
   return (
     <div className="flex flex-col justify-center items-center gap-2 p-2 rounded-md">
       <div className="flex justify-between px-4 items-center w-[100%] md:min-w-[600px] max-w-sm bg-white border border-gray-200 rounded-lg shadow">
@@ -25,7 +24,7 @@ const FoodHomeCard = ({ id, name, description, img, price, diet, ratings }) => {
               {"RS "}
               {price}
             </p>
-            <Link to={"/auth/menu"}>
+            <Link to={"/menu"}>
               <p className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center ">
                 Explore
               </p>

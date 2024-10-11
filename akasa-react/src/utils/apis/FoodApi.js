@@ -13,7 +13,7 @@ class FoodApi {
 
   static async fetchFoodData(endpoint) {
     try {
-      const response = await axiosAuth.get(endpoint);
+      const response = await axiosNoAuth.get(endpoint);
       //console.log(response);
       return response.data;
     } catch (error) {
@@ -24,16 +24,6 @@ class FoodApi {
   static getSelected = async (ids) => {
     try {
       const response = await axiosAuth.post("/food/ids", ids);
-      //console.log(response);
-      return response.data;
-    } catch (error) {
-      return error;
-    }
-  };
-
-  static getCartDetails = async () => {
-    try {
-      const response = await axiosAuth.get("/user/carts/details");
       //console.log(response);
       return response.data;
     } catch (error) {

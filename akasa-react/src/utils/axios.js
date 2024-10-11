@@ -7,6 +7,7 @@ const axiosNoAuth = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
+    "session-id": localStorage.getItem("session-id"),
   },
 });
 
@@ -41,7 +42,7 @@ axiosAuth.interceptors.response.use(
       const response = error.response;
       console.log(response.status);
       if (response.status == 401) {
-        localStorage.removeItem("token");
+        //localStorage.removeItem("token");
         //window.location.href = "/login";
       }
     } else if (error.request) {

@@ -12,31 +12,24 @@ server:
 # Application information
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: password
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    url: ${DB_URL}
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
-  data:
-    mongodb:
-      uri: mongodb+srv://jabhinath1995:5qRQLsjQEZ6wYitd@cluster0.tllxlzz.mongodb.net/Akasa?retryWrites=true&w=majority&appName=Cluster0
   application:
-    name: ms-admin
+    name: abhinath-dev-backend
   mail:
     host: smtp.gmail.com
     port: 587
-    username: jabhinath1995@gmail.com
-    password: yibhuxmzphogtmjl
+    username: ${EMAIL_USER}
+    password: ${EMAIL_PASSWORD}
     properties:
       mail:
         smtp:
@@ -54,4 +47,4 @@ spring:
 
 
 jwt:
-  secret: YmU2ZDc5MTE5ZDAxZGFmMGQyYzgzZmZlMmZkMWFiMjVmYzBjMzIzZDEzZGM5N2IxZGZlNjU0ODQ2MDQwNzI5ZjFhOGEyNGY4N2M5OTlhMjMxNDVlOTJkODBhMGVkNGM5NWE4NjAxZWI1Y2ZiNWVlN2JhNThkMGQxYjhmMzczYTA=
+  secret: ${JWT_SECRET}

@@ -4,7 +4,6 @@ FROM node:18 AS build
 # Set working directory
 WORKDIR /app
 
-
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
@@ -15,6 +14,8 @@ RUN npm install
 COPY . .
 
 # Build the Vite application
+ARG VITE_API_URL
+ENV VITE_API_URL=${VITE_API_URL}
 RUN npm run build
 
 # Stage 2: Serve the application
@@ -24,7 +25,7 @@ FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 
 # Expose port 80
-EXPOSE 3000
+EXPOSE 80
 
 # Start Nginx
 CMD ["nginx", "-g", "daemon off;"]

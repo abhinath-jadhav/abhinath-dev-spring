@@ -1,26 +1,26 @@
 [
   {
     "name": "Pizza",
-    "desc": "Select from Pizzas"
+    "description": "Select from Pizzas"
   },
   {
     "name": "Sandwich",
-    "desc": "Select from Sandwiches"
+    "description": "Select from Sandwiches"
   },
   {
     "name": "Fruits",
-    "desc": "Select from Fruits"
+    "description": "Select from Fruits"
   },
   {
     "name": "Burger",
-    "desc": "Select from Burgers"
+    "description": "Select from Burgers"
   },
   {
     "name": "Rice",
-    "desc": "Select from Rice"
+    "description": "Select from Rice"
   },
   {
     "name": "Burger",
-    "desc": "Select from sandwich"
+    "description": "Select from sandwich"
   }
 ]

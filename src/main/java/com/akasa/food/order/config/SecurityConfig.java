@@ -20,12 +20,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter authFilter;
@@ -41,12 +44,14 @@ public class SecurityConfig {
     private static final String[] PUBLIC_URLS = {
             "/v3/api-docs/**",
             "/v2/api-docs/**",
-            "/api/v1/auth/**",
-            "/api/v1/food/favorites",
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/webjars/**",
-            "/h2-console/**"
+            "/h2-console/**",
+            "/api/v1/auth/**",
+            "/api/v1/food/**",
+            "/api/v1/inventory/**",
+            "/api/v1/cart/**"
     };
 
     @Bean
@@ -88,6 +93,18 @@ public class SecurityConfig {
         return (web) -> web
                 .ignoring()
                 .antMatchers("/h2-console/**"); // Allow access to H2 console without security
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Frontend URL
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "session-id")); // Allow necessary headers
+        configuration.setAllowCredentials(true); // Allow credentials
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }

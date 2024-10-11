@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserCartRepository extends MongoRepository<UserCart, String> {
+public interface UserCartRepository extends JpaRepository<UserCart, Long> {
 
     UserCart findByUserId(String user);
 

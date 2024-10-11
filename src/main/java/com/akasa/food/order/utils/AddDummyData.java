@@ -2,7 +2,6 @@ package com.akasa.food.order.utils;
 
 import com.akasa.food.order.models.*;
 import com.akasa.food.order.repository.*;
-import com.akasa.food.order.utils.builders.FoodItemBuilder;
 import com.akasa.food.order.utils.builders.UserBuilder;
 import com.akasa.food.order.utils.builders.UserRoleBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Component
@@ -43,7 +41,7 @@ public class AddDummyData {
     @Autowired
     private OrderRepository orderRepository;
 
-    @PostConstruct
+    //@PostConstruct
     //@Transactional
     private void startUp() {
 
@@ -93,7 +91,7 @@ public class AddDummyData {
         inventoryRepository.saveAll(DummyData.getInv());
         foodItemRepo.saveAll(DummyData.getfoods());
 
-        Set<CartItem> cartItems= new HashSet<>();
+        List<CartItem> cartItems= new LinkedList<>();
         CartItem cartItem = new CartItem();
 
         cartItem.setItem(1L);

@@ -41,7 +41,10 @@ public class AuthService {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    public ResponseEntity<?> authenticate(AuthRequest authRequest) {
+    @Autowired
+    private CartService cartService;
+
+    public ResponseEntity<?> authenticate(AuthRequest authRequest, String sessionId) {
         User user = null;
         try {
             user = authenticate(authRequest.getUsername(), authRequest.getPassword(), authRequest.getEmail());
@@ -55,17 +58,21 @@ public class AuthService {
                             .build());
         }
         // generating token
+        JwtTokenDto jwtTokenDto = null;
         try {
             jwtTokenUtil.validateToken(user.getToken());
-            return ResponseEntity.ok(new JwtTokenDto(user.getToken(),"200", user.getId().toString()));
+            jwtTokenDto = new JwtTokenDto(user.getToken(), "200", user.getId().toString());
+
         } catch (Exception e) {
             log.info("Token expired. Generating new token.");
+            HashSet<String> objects = user.getRoles().stream().map(UserRole::getName).collect(Collectors.toCollection(HashSet::new));
+            String token = jwtTokenUtil.generateToken(authRequest.getEmail(), objects);
+            user.setToken(token);
+            userRepo.save(user);
+            jwtTokenDto = new JwtTokenDto(token,"200",user.getId().toString());
         }
-        HashSet<String> objects = user.getRoles().stream().map(UserRole::getName).collect(Collectors.toCollection(HashSet::new));
-        String token = jwtTokenUtil.generateToken(authRequest.getEmail(), objects);
-        user.setToken(token);
-        userRepo.save(user);
-        return ResponseEntity.ok(new JwtTokenDto(token,"200",user.getId().toString()));
+        cartService.updateCart(sessionId, user.getUsername());
+        return ResponseEntity.ok(jwtTokenDto);
     }
 
     private User authenticate(String username, String password, String email) {
@@ -99,7 +106,7 @@ public class AuthService {
         }
     }
 
-    public ResponseEntity<?> signup(RegisterRequest request) {
+    public ResponseEntity<?> signup(RegisterRequest request, String sessionId) {
         Optional<User> userOptional = userRepo.findByUsername(request.getEmail());
         if (userOptional.isPresent()) {
             return ResponseEntity
@@ -123,13 +130,14 @@ public class AuthService {
                     .roles(roles)
                     .accountNonExpired(true)
                     .build();
+
             userRepo.save(user);
             AuthRequest authRequest = AuthRequest.builder()
                     .username(user.getUsername())
                     .email(user.getEmail())
                     .password(request.getPassword())
                     .build();
-            return authenticate(authRequest);
+            return authenticate(authRequest, sessionId);
         }
         return ResponseEntity
                 .ok(

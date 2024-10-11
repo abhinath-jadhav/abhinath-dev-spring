@@ -8,12 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -56,71 +58,29 @@ public class UserService {
                 .build();
     }
 
-    public Response getCartItems(String user) {
-        log.info("Get Cart list request for user :: {}", user);
 
-        UserCart cart =  cartRepository.findByUserId(user);
-
-        if(cart == null || cart.getItems() == null || cart.getItems().isEmpty()){
-            log.info("Categories not found in the DB");
-            return ErrorResponse.builder()
-                    .status("500")
-                    .error("Empty data")
-                    .message("Please try after some time")
-                    .build();
-        }
-        log.info("Flights list :: {}", cart.getItems());
-        return CartItemsResponse.builder()
-                .status("200")
-                .count(cart.getItems().size())
-                .list(cart.getItems())
-                .build();
-    }
-
-    public Response addCarts(String user, Set<CartItem> items) {
-        Optional<User> byEmail = userRepo.findByEmail(user);
-
-         if(byEmail.isPresent()){
-            UserCart userCart = cartRepository.findByUserId(user);
-            if(userCart != null){
-                userCart.setItems(items);
-                cartRepository.save(userCart);
-                return foodItemService.selectedItems(items);
-
-            } else {
-                UserCart cart = new UserCart();
-                cart.setUserId(user);
-                cart.setItems(items);
-                cartRepository.save(cart);
-                return foodItemService.selectedItems(items);
-            }
-
-        }
-        return ErrorResponse.builder()
-                .status("500")
-                .error("User not found")
-                .message("Enter valid user")
-                .build();
-
-
-    }
-
+    @Transactional
     public Response completeOrder(String user, Order order) {
-        log.info("Order request received for user :: {}, order ::{}", user, order);
-        String validated = validateOrder(order);
+        log.info("Order request received for user :: {},", user);
+        UserCart userCart = cartRepository.findByUserId(user);
+        String validated = validateOrder(userCart);
         if(validated.equalsIgnoreCase("")) {
+
+            List<OrderItem> orderItems = userCart.getItems().stream()
+                    .map(e -> new OrderItem(null, e.getItem(), e.getQuantity(), order))
+                    .collect(Collectors.toList());
+            order.setItems(orderItems);
             String orderId = UUID.randomUUID().toString();
-            order.setOrderId(orderId);
             order.setUserId(user);
             order.setStatus(OrderStatus.PROCESSING.toString());
-
+            order.setOrderId(orderId);
             cartRepository.deleteByUserId(user);
 
-            orderRepository.save(order);
+            Order saved = orderRepository.save(order);
 
             ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(5);
 
-            scheduledExecutorService.schedule(() -> task(orderId), 1, TimeUnit.MINUTES);
+            scheduledExecutorService.schedule(() -> task(saved.getId()), 1, TimeUnit.MINUTES);
             return OrderResponse.builder()
                     .orderId(orderId)
                     .message("Order Successfully Placed")
@@ -134,8 +94,8 @@ public class UserService {
         }
     }
 
-    private String validateOrder(Order order) {
-        List<Long> list = order.getItems().stream()
+    private String validateOrder(UserCart userCart) {
+        List<Long> list = userCart.getItems().stream()
                 .map(CartItem::getItem)
                 .collect(Collectors.toList());
 
@@ -146,7 +106,7 @@ public class UserService {
 
         List<Inventory> updatedInventory = new ArrayList<>();
 
-        order.getItems().forEach(li->{
+        userCart.getItems().forEach(li->{
             Inventory inventory = map.get(li.getItem());
             if(map.containsKey(li.getItem()) && inventory.getStock() < li.getQuantity()) {
                 log.info("Item no in stock :: {}", inventory.getItemName());
@@ -169,8 +129,8 @@ public class UserService {
 
     }
 
-    private void task (String orderId) {
-        Order order = orderRepository.findByOrderId(orderId);
+    private void task (Long orderId) {
+        Order order = orderRepository.findById(orderId).get();
 
         order.setStatus(OrderStatus.COMPLETED.toString());
 
@@ -194,23 +154,5 @@ public class UserService {
 
     }
 
-    public Response getUserCartDetails(String user) {
 
-        UserCart cart =  cartRepository.findByUserId(user);
-
-        if(cart == null || cart.getItems() == null || cart.getItems().isEmpty()){
-            log.info("Categories not found in the DB");
-            return ErrorResponse.builder()
-                    .status("500")
-                    .error("Empty data")
-                    .message("Please try after some time")
-                    .build();
-        }
-
-        Response response = foodItemService.selectedItems(cart.getItems());
-
-        log.info("User Cart :: {}", response);
-        return response;
-
-    }
 }
