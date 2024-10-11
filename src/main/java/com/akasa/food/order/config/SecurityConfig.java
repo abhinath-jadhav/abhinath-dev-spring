@@ -4,6 +4,7 @@ package com.akasa.food.order.config;
 import com.akasa.food.order.filter.JwtAuthenticationFilter;
 import com.akasa.food.order.service.CustomUseDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -34,6 +35,9 @@ public class SecurityConfig {
     private JwtAuthenticationFilter authFilter;
 
     @Autowired CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Value("${ALLOWED_ORIGINS}")
+    private String allowedOrigins;
 
     @Bean
     //authentication
@@ -97,8 +101,9 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "https://abhinathdev.in/","https://portfolio.abhinathdev.in/")); // Frontend URL
+        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(","))); // Frontend URL
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "session-id")); // Allow necessary headers
         configuration.setAllowCredentials(true); // Allow credentials
