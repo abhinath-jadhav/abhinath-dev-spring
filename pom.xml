@@ -124,7 +124,7 @@
 	</dependencyManagement>
 
 	<build>
-		<finalName>ms-admin</finalName>
+		<finalName>abhinath-dev-spring</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
