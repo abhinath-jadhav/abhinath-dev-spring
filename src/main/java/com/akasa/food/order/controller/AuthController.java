@@ -22,7 +22,7 @@ public class AuthController {
     private static final String AUTHORIZATION = "Authorization";
 
 
-    @GetMapping("/test")
+    @GetMapping("/health")
     public ResponseEntity<?> getAdmin() {
         return ResponseEntity.ok("Success");
     }
