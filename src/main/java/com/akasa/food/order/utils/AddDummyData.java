@@ -42,6 +42,43 @@ public class AddDummyData {
     private OrderRepository orderRepository;
 
     //@PostConstruct
+    private void setUp(){
+        UserRole userRole1 = UserRoleBuilder.builder()
+                .name("ROLE_USER")
+                .build();
+        UserRole userRole2 = UserRoleBuilder.builder()
+                .name("ROLE_ADMIN")
+                .build();
+        roleRepo.saveAll(new HashSet<>(Arrays.asList(userRole1, userRole2)));
+
+        userRole1.setId(1L);
+        userRole2.setId(2L);
+
+
+        User user = UserBuilder.builder()
+                .email("testuser@gmail.com")
+                .roles(new HashSet<>(Arrays.asList(userRole1)))
+                .username("testuser@gmail.com")
+                .accountNonExpired(true)
+                .password(passwordEncoder.encode("testpass"))
+                .build();
+
+
+
+        User user2 = UserBuilder.builder()
+                .email("jabhinath1995@gmail.com")
+                .roles(new HashSet<>(Collections.singletonList(userRole2)))
+                .username("jabhinath1995@gmail.com")
+                .accountNonExpired(true)
+                .password(passwordEncoder.encode("S@b8at1ze2"))
+                .build();
+
+        userRepo.deleteAll();
+        userRepo.save(user);
+        userRepo.save(user2);
+    }
+
+    //@PostConstruct
     //@Transactional
     private void startUp() {
 
@@ -62,7 +99,7 @@ public class AddDummyData {
                 .accountNonExpired(true)
                 .password(passwordEncoder.encode("testpass"))
                 .build();
-
+        userRepo.deleteAll();
         userRepo.save(user);
 
         Flight flight1 = new Flight();
@@ -85,7 +122,12 @@ public class AddDummyData {
         flight4.setUserId("testuser@gmail.com");
         flight4.setPath("Bangalore to Mumbai");
 
+        flightRepo.deleteAll();
         flightRepo.saveAll(Arrays.asList(flight2, flight1, flight3, flight4));
+
+        itemCategoryRepo.deleteAll();
+        inventoryRepository.deleteAll();
+        foodItemRepo.deleteAll();
 
         itemCategoryRepo.saveAll(DummyData.getCats());
         inventoryRepository.saveAll(DummyData.getInv());

@@ -41,18 +41,56 @@ public class InventoryService {
         log.info("Get request for fetch Inventories by user :: {}, item :: {}", MDC.get("user"), id);
         Inventory inventories = inventoryRepository.findByItemId(id);
         if(inventories == null || inventories.getStock() == 0){
-            log.info("Inventories not found in the DB");
+            log.info("Inventory not found in the DB for id :: {}",id);
             return ErrorResponse.builder()
                     .status("500")
                     .error("Empty data")
                     .message("Stock not available")
                     .build();
         }
-        log.info("Inventories list :: {} user :: {}", inventories , MDC.get("user"));
+        log.info("Inventories list :: {} user :: {} id :: {}", inventories , MDC.get("user"), id);
         return InventoryResponse.builder()
                 .status("200")
                 .message("Success")
                 .item(inventories)
+                .build();
+    }
+
+    public Response updateInventory(Inventory inventory) {
+
+        Inventory inventory1 = inventoryRepository.findByItemId(inventory.getItemId());
+
+        if (inventory1 != null ){
+            inventory1.setStock(inventory.getStock());
+            inventoryRepository.save(inventory1);
+            return SuccessResponse.builder()
+                    .status("200")
+                    .message("Inventory updated successfully.")
+                    .build();
+        }
+
+        return ErrorResponse.builder()
+                .status("400")
+                .message("Wrong item ID")
+                .build();
+    }
+
+    public Response addInventory(Inventory inventory) {
+
+        Inventory inventory1 = inventoryRepository.findByItemId(inventory.getItemId());
+
+        if (inventory1 != null ){
+            inventory1.setStock(inventory.getStock() + inventory1.getStock());
+            inventoryRepository.save(inventory1);
+            return SuccessResponse.builder()
+                    .status("200")
+                    .message("Inventory added successfully.")
+                    .build();
+        }
+
+        return ErrorResponse.builder()
+                .status("400")
+                .message("Wrong item ID")
                 .build();
     }
 }

@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 request.setAttribute("userId", user);
                 request.setAttribute("roles", claims.get("roles"));
 
-                UserDetails userDetails = customUseDetailService.loadUserByUsername(user);
+                UserDetails userDetails = customUseDetailService.loadUserByUsername(user.toLowerCase());
                 MDC.put("user", user);
                 Authentication authentication = new UsernamePasswordAuthenticationToken(user, userDetails.getPassword(), userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);

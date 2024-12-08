@@ -2,6 +2,7 @@ package com.akasa.food.order.controller;
 
 import com.akasa.food.order.dto.Response;
 import com.akasa.food.order.models.CartItem;
+import com.akasa.food.order.models.FoodItem;
 import com.akasa.food.order.service.FoodItemService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

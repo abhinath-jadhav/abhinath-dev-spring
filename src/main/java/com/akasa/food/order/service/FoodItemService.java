@@ -4,7 +4,9 @@ import com.akasa.food.order.dto.*;
 import com.akasa.food.order.models.CartItem;
 import com.akasa.food.order.models.Category;
 import com.akasa.food.order.models.FoodItem;
+import com.akasa.food.order.models.Inventory;
 import com.akasa.food.order.repository.FoodItemRepo;
+import com.akasa.food.order.repository.InventoryRepository;
 import com.akasa.food.order.repository.ItemCategoryRepo;
 import com.akasa.food.order.utils.BeanMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,6 +29,9 @@ public class FoodItemService {
 
     @Autowired
     private ItemCategoryRepo itemCategoryRepo;
+
+    @Autowired
+    private InventoryService inventoryService;
 
     public Response getAllItems() {
 
@@ -125,5 +130,47 @@ public class FoodItemService {
                 .message("Success")
                 .cart(collect)
                 .build();
+    }
+
+    public Response addFood(FoodItem foodItem) {
+
+        if (foodItem.getId() != null) {
+            Optional<FoodItem> byId = foodItemRepo.findById(foodItem.getId());
+            byId.ifPresentOrElse(
+                    (o) -> {
+                        foodItemRepo.save(foodItem);
+                        log.info("Food Item updated successfully. ");
+                    }, () -> {
+
+                        foodItem.setId(null);
+                        FoodItem save = foodItemRepo.save(foodItem);
+                        Inventory inventory = new Inventory();
+                        inventory.setItemName(foodItem.getName());
+                        inventory.setStock(0);
+                        inventory.setItemId(save.getId());
+                        inventoryService.updateInventory(inventory);
+
+                        log.info("Food Item Added successfully. ");
+                    }
+            );
+            return SuccessResponse.builder()
+                    .status("200")
+                    .message("Item updated successfully.")
+                    .build();
+        }
+
+        FoodItem save = foodItemRepo.save(foodItem);
+        Inventory inventory = new Inventory();
+        inventory.setItemName(foodItem.getName());
+        inventory.setStock(0);
+        inventory.setItemId(save.getId());
+        inventoryService.updateInventory(inventory);
+        log.info("Food Item updated successfully.");
+
+        return SuccessResponse.builder()
+                .status("200")
+                .message("Item added successfully.")
+                .build();
+
     }
 }
