@@ -36,7 +36,7 @@ public class SecurityConfig {
 
     @Autowired CustomAuthenticationEntryPoint authenticationEntryPoint;
 
-    @Value("${ALLOWED_ORIGINS}")
+    @Value("${ALLOWED_ORIGINS:http://localhost:5137}")
     private String allowedOrigins;
 
     @Bean
